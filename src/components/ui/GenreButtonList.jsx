@@ -50,15 +50,15 @@ const GenreButtonList = () => {
 
       {/* Conditional rendering for 'All' genre or specific genres */}
       {selectedGenre === 'All' ? (
-        <>
-          <EventList events="Movies" />
-          <EventList events="Sports" />
-          <EventList events="Drama" />
-          <EventList events="Comic Shows" />
-        </>
-      ) : (
-        <EventList events={filteredEvents} />
-      )}
+  <>
+    <EventList genreType="Movies" />
+    <EventList genreType="Sports" />
+    <EventList genreType="Drama" />
+    <EventList genreType="Comic Shows" />
+  </>
+) : (
+  <EventList genreType={selectedGenre} />
+)}
     </div>
   );
 };

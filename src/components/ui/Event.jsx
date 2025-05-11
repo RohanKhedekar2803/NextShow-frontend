@@ -33,6 +33,10 @@ const Event = ({ event_id, title, genre, image, cast = [], description = '', dur
       src={image}
       alt={title}
       className="w-full h-full object-cover transition-transform duration-300 hover:scale-110"
+      onError={(e) => {
+        e.target.onerror = null;
+        e.target.src = 'https://tse2.mm.bing.net/th?id=OIP.tG2FrC7ttKs4XkcRaKzT1QHaFu&pid=Api&P=0&h=180';
+      }}
     />
     <div className="absolute inset-0 bg-gradient-to-t from-black/70 to-transparent rounded-xl" />
   </div>
@@ -57,6 +61,10 @@ const Event = ({ event_id, title, genre, image, cast = [], description = '', dur
         src={image}
         alt={title}
         className="w-full h-40 object-contain rounded mb-4" // reduced height from h-60 to h-40
+        onError={(e) => {
+          e.target.onerror = null;
+          e.target.src = 'https://tse2.mm.bing.net/th?id=OIP.tG2FrC7ttKs4XkcRaKzT1QHaFu&pid=Api&P=0&h=180';
+        }}
       />
       <h2 className="text-xl font-bold text-gray-800 mb-2 ">{title}</h2>
       <p className="font-semibold text-sm text-gray-600 mb-2">Genre: {genre}</p>
