@@ -8,8 +8,7 @@ export default function Navbar() {
   const menus = [
     { title: "Home", path: "/homepage" },
     { title: "Theaters", path: "/theaterPage" },
-    { title: "About Us", path: "/your-path" },
-    { title: "Contact Us", path: "/your-path" },
+    { title: "Login", path: "/" },
   ]
 
   return (

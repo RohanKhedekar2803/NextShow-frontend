@@ -1,40 +1,18 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
+import {getShowById} from '@/Services/theaters'
 
-const dummyEvents = [
-  {
-    id: '1',
-    title: 'Classical Music Night',
-    type: 'Music',
-    duration: '2h',
-    photo: 'https://tse3.mm.bing.net/th?id=OIP.X8wgbccc9VJUgYRrBOU5PAHaEQ&pid=Api&P=0&h=180',
-  },
-  {
-    id: '2',
-    title: 'Shakespeare in Park',
-    type: 'Drama',
-    duration: '3h',
-    photo: 'https://tse3.mm.bing.net/th?id=OIP.X8wgbccc9VJUgYRrBOU5PAHaEQ&pid=Api&P=0&h=180',
-  },
-  {
-    id: '3',
-    title: 'Indie Film Festival',
-    type: 'Film',
-    duration: '5h',
-    photo: 'https://tse3.mm.bing.net/th?id=OIP.X8wgbccc9VJUgYRrBOU5PAHaEQ&pid=Api&P=0&h=180',
-  },
-];
 
 const EventPage = () => {
   const { id } = useParams();
-  const events = dummyEvents.find((e) => e.id === id);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
+  const [events,setEvents] = useState()
+
   const [modalOpen, setModalOpen] = useState(false);
   const [selectedSeats, setSelectedSeats] = useState([]);
-  const seatLayout = [
-    [10, 10, 10],
-    [10, 10, 10],
-    [10, 10, 10]
-  ];
+  const [seatLayout, setSeatLayout] = useState();
+  const [sectionPrices, setSectionPrices] = useState([200, 150, 100]);
   
   const toggleSeat = (sectionIdx, rowIdx, seatIdx) => {
     const seatId = `S${sectionIdx}-R${rowIdx}-C${seatIdx}`;
@@ -73,9 +51,30 @@ const EventPage = () => {
   
   
   
+  useEffect(() => {
+    if (!id) return;
 
+    const fetchEvent = async () => {
+      try {
+        setLoading(true);
+        const data = await getShowById(id);
+        setEvents(data);
+        setSeatLayout(data.auditoriumInfo.seatsArrangement)
+        setSectionPrices(data.blockprices)
+        console.log(data)
+        
+      } catch (err) {
+        setError(err.message || "Failed to load event");
 
-  if (!events) {
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchEvent();
+  }, [id]);
+
+  if (loading) {
     return (
       <div className="p-6 text-center text-white bg-gray-900 min-h-screen">
         <h1 className="text-3xl font-bold">Event Not Found</h1>
@@ -84,20 +83,20 @@ const EventPage = () => {
     );
   }
 
-  const sectionPrices = [200, 150, 100];
+
 
   
   return (
     <div className="p-6 bg-gray-900 text-white min-h-screen">
       <div className="max-w-2xl mx-auto bg-gray-800 rounded-lg p-6 shadow-lg">
         <img
-          src={events.photo}
-          alt={events.title}
+          src={"https://tse2.mm.bing.net/th?id=OIF.xLGq46pnwQ5MnmwUvUWTMA&pid=Api&P=0&h=180"}
+          alt={"aaa"}
           className="w-full h-64 object-cover rounded-lg mb-4"
         />
-        <h1 className="text-3xl font-bold mb-2">{events.title}</h1>
-        <p className="text-gray-400 mb-1">🎭 Type: {events.type}</p>
-        <p className="text-gray-400 mb-1">⏱ Duration: {events.duration}</p>
+        <h1 className="text-3xl font-bold mb-2">{events.eventDetails.title}</h1>
+        <p className="text-gray-400 mb-1">🎭 Type: {events.eventDetails.event_Type}</p>
+        <p className="text-gray-400 mb-1">⏱ Start: {events.startTime[3]}:{events.startTime[4]}0  IST - {events.endTime[3]}:{events.startTime[4]}0  IST</p>
         <p className="text-gray-500 mt-4 mb-4">You can now proceed to book tickets or view more details here.</p>
 
         <button
@@ -115,8 +114,10 @@ const EventPage = () => {
       
       {/* Top Event Info */}
       <div className="mb-6">
-        <h2 className="text-3xl font-bold mb-2">{events.title}</h2>
-        <p className="text-gray-400">🎭 {events.type} | ⏱ {events.duration}</p>
+        <h2 className="text-3xl font-bold mb-2">{events.eventDetails.title}</h2>
+        <p className="text-gray-400 flex">🎭 {events.eventDetails.event_Type}  |    ⏱ {events.startTime[3]}:{events.startTime[4]}0  IST - {events.endTime[3]}:{events.startTime[4]}0  IST</p>
+        
+        
       </div>
 
       <div className="w-full text-center mb-6">
