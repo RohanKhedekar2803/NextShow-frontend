@@ -5,7 +5,7 @@ const URL = BASE_URL_EVENTS + '/events';
 
 
 // ✅ Hardcoded JWT Tokeney
-const JWT_TOKEN = 'eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJyb2hhbmtoZWRla2FyMjgwM0BnbWFpbC5jb20iLCJpYXQiOjE3NDc2ODIxNTEsImV4cCI6MTc0Nzc2ODU1MSwicm9sZXMiOlsiVVNFUiJdfQ.AWaTiBCnfDuFmLcrikKHYxAiu71h_5M2sV0BuzLJwx4';
+const JWT_TOKEN = localStorage.getItem('token');
 
 const headers = {
   Authorization: `Bearer ${JWT_TOKEN}`,
@@ -41,6 +41,27 @@ export const addEvent = async (eventData) => {
     return response.data;
   } catch (error) {
     console.error('Error adding new event:', error);
+    throw error;
+  }
+};
+
+export const getAllshows = async (eventData) => {
+  try {
+    const response = await axios.get('http://localhost:8080/shows', { headers });
+    console.log(response.data)
+    return response.data;
+  } catch (error) {
+    console.error('Error adding new event:', error);
+    throw error;
+  }
+};
+
+export const getshowByAuditoriumId = async (id) => {
+  try {
+    const response = await axios.get(`http://localhost:8080/eventsAPI/auditoriums/${id}`, { headers });
+    return response.data;
+  } catch (error) {
+    console.error(`Error fetching event with ID ${id}:`, error);
     throw error;
   }
 };

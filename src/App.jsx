@@ -7,6 +7,8 @@ import { BrowserRouter as Router, Routes, Route, Link } from 'react-router-dom';
 import HomePage from './pages/homepage';
 import TheatersPage from './pages/TheatersPage';
 import EventPage from './pages/EventPage';
+import PaymentSuccessPage from './pages/PaymentSuccessPage';
+import PaymentFailedPage from './pages/PaymentFailedPage';
 
 function App() {
 
@@ -23,6 +25,8 @@ function App() {
       <Route path="/theaterPage" element={<TheatersPage />} />
       <Route path="/theaterPage/:filtertitle" element={<TheatersPage />} />
       <Route path="/events/:id" element={<EventPage />} />
+      <Route path="/paymentsucceded" element={<PaymentSuccessPage />} />
+      <Route path="/failed" element={<PaymentFailedPage />} />
     </Routes>
   </Router>
     
