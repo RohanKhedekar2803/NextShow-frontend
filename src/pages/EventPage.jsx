@@ -167,7 +167,7 @@ const EventPage = () => {
     <div className="p-6 bg-gray-900 text-white min-h-screen">
       <div className="max-w-2xl mx-auto bg-gray-800 rounded-lg p-6 shadow-lg">
         <img
-          src={'https://tse2.mm.bing.net/th?id=OIF.xLGq46pnwQ5MnmwUvUWTMA&pid=Api&P=0&h=180'}
+          src={'https://tse3.mm.bing.net/th/id/OIP.4cHT08SCSSMUYUGFDLjx1AHaE8?pid=Api&P=0&h=180'}
           alt={'aaa'}
           className="w-full h-64 object-cover rounded-lg mb-4"
         />

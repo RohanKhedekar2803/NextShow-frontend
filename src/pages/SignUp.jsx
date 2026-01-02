@@ -43,7 +43,7 @@ export default function SignUp() {
         if (data === "User registered successfully!") {
           alert("User Registered! Please login.");
         } else {
-          alert("Registration failed please user unique email");
+          alert("Registration failed please use unique email");
         }
       } catch (error) {
         alert("Error occurred: " + error.message);
