@@ -1,4 +1,4 @@
-import React, { useRef, useState, useEffect } from 'react';
+import React, { useRef, useState, useEffect, useCallback } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
 import Event from './Event';
 import { getAllEvents, getAllshows, getshowByAuditoriumId } from '@/Services/homepage';
@@ -11,6 +11,8 @@ export default function EventList({ genreType }) {
   const [auditorium, setAuditorium] = useState({});
   const [showListModal, setShowListModal] = useState(false);
   const [selectedEventTitle, setSelectedEventTitle] = useState('');
+  const [canScrollLeft, setCanScrollLeft] = useState(false);
+  const [canScrollRight, setCanScrollRight] = useState(false);
 
   useEffect(() => {
     async function fetchData() {
@@ -20,6 +22,42 @@ export default function EventList({ genreType }) {
     }
     fetchData();
   }, [genreType]);
+
+  const checkScrollButtons = useCallback(() => {
+    const container = scrollContainer.current;
+    if (!container) return;
+    
+    const { scrollLeft, scrollWidth, clientWidth } = container;
+    const hasOverflow = scrollWidth > clientWidth;
+    const isAtStart = scrollLeft <= 5; // Small threshold for rounding
+    const isAtEnd = scrollLeft >= scrollWidth - clientWidth - 5;
+    
+    setCanScrollLeft(hasOverflow && !isAtStart);
+    setCanScrollRight(hasOverflow && !isAtEnd);
+  }, []);
+
+  useEffect(() => {
+    checkScrollButtons();
+    // Check again after a short delay to ensure DOM is fully rendered
+    const timer = setTimeout(checkScrollButtons, 100);
+    // Also check after images load
+    const imageLoadTimer = setTimeout(checkScrollButtons, 500);
+    
+    const container = scrollContainer.current;
+    if (container) {
+      container.addEventListener('scroll', checkScrollButtons);
+      window.addEventListener('resize', checkScrollButtons);
+    }
+    
+    return () => {
+      clearTimeout(timer);
+      clearTimeout(imageLoadTimer);
+      if (container) {
+        container.removeEventListener('scroll', checkScrollButtons);
+        window.removeEventListener('resize', checkScrollButtons);
+      }
+    };
+  }, [movies, checkScrollButtons]);
 
   const handleScroll = (direction) => {
     const container = scrollContainer.current;
@@ -63,10 +101,22 @@ export default function EventList({ genreType }) {
   };
 
   return (
-    <div className="bg-gray-900">
-      <div className="text-yellow-50 font-extrabold text-3xl pt-4 pl-4">Explore {genreType}</div>
-      <div className="relative">
-        <div ref={scrollContainer} className="flex overflow-x-auto space-x-4 py-6 px-4 bg-gray-900 scrollbar-none">
+    <div className="bg-gradient-to-b from-gray-900 via-gray-900 to-black">
+      <div className="px-4 sm:px-6 lg:px-8 pt-6 sm:pt-8 pb-4">
+        <h2 className="text-2xl sm:text-3xl lg:text-4xl font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-yellow-400 via-yellow-300 to-yellow-400">
+          Explore {genreType}
+        </h2>
+        <div className="h-1 w-20 bg-gradient-to-r from-purple-600 to-yellow-400 rounded-full mt-2"></div>
+      </div>
+      <div className="relative group">
+        <div 
+          ref={scrollContainer} 
+          className="flex overflow-x-auto space-x-4 sm:space-x-6 py-6 px-4 sm:px-6 lg:px-8 pb-8 scrollbar-thin scrollbar-thumb-purple-600 scrollbar-track-gray-800 scrollbar-thumb-rounded-full scrollbar-track-rounded-full"
+          style={{ 
+            scrollbarWidth: 'thin',
+            scrollbarColor: '#9333ea rgba(31, 41, 55, 0.5)'
+          }}
+        >
           {movies.map((movie) => (
             <Event
               key={movie.eventId}
@@ -83,68 +133,166 @@ export default function EventList({ genreType }) {
           ))}
         </div>
 
-        <button
-          onClick={() => handleScroll('left')}
-          className="absolute left-2 top-1/2 transform -translate-y-1/2 bg-gray-800 text-white p-2 rounded-full shadow-lg"
-        >
-          &lt;
-        </button>
-        <button
-          onClick={() => handleScroll('right')}
-          className="absolute right-2 top-1/2 transform -translate-y-1/2 bg-gray-800 text-white p-2 rounded-full shadow-lg"
-        >
-          &gt;
-        </button>
+        {movies.length > 0 && canScrollLeft && (
+          <button
+            onClick={() => handleScroll('left')}
+            className="absolute left-2 sm:left-4 top-1/2 transform -translate-y-1/2 bg-black/60 hover:bg-black/80 backdrop-blur-md text-white p-3 sm:p-4 rounded-full shadow-xl transition-all duration-200 hover:scale-110 active:scale-95 opacity-0 group-hover:opacity-100 z-10 border border-white/20"
+            aria-label="Scroll left"
+          >
+            <svg className="w-5 h-5 sm:w-6 sm:h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
+            </svg>
+          </button>
+        )}
+        {movies.length > 0 && canScrollRight && (
+          <button
+            onClick={() => handleScroll('right')}
+            className="absolute right-2 sm:right-4 top-1/2 transform -translate-y-1/2 bg-black/60 hover:bg-black/80 backdrop-blur-md text-white p-3 sm:p-4 rounded-full shadow-xl transition-all duration-200 hover:scale-110 active:scale-95 opacity-0 group-hover:opacity-100 z-10 border border-white/20"
+            aria-label="Scroll right"
+          >
+            <svg className="w-5 h-5 sm:w-6 sm:h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
+            </svg>
+          </button>
+        )}
       </div>
 
       {showListModal && (
-        <div className="fixed inset-0 bg-black bg-opacity-70 flex justify-center items-center z-50">
-          <div className="bg-white p-6 rounded-lg max-w-3xl w-full overflow-y-auto max-h-[80vh] relative">
-            <button
-              onClick={() => setShowListModal(false)}
-              className="absolute top-2 right-4 text-gray-600 hover:text-red-600 text-xl"
-            >
-              &times;
-            </button>
-            <h2 className="text-xl font-bold mb-4">
-              Available Shows for <span className="text-purple-600">{selectedEventTitle}</span>
-            </h2>
-            {shows.length === 0 ? (
-              <p className="text-gray-700">No shows available for this event.</p>
-            ) : (
-              <table className="w-full border border-gray-200">
-                <thead className="bg-gray-100">
-                  <tr>
-                    <th className="p-2 border">Auditorium</th>
-                    <th className="p-2 border">Time</th>
-                    <th className="p-2 border">Location</th>
-                    <th className="p-2 border">Prices</th>
-                    <th className="p-2 border">Book Now</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  {shows.map((show, idx) => {
-                    const aud = auditorium[show.auditoriumId];
-                    return (
-                      <tr key={idx} className="text-center border-t">
-                        <td className="p-2 border">{aud?.name || 'Loading...'}</td>
-                        <td className="p-2 border">{formatCustomDate(show.startTime)} - {formatCustomDate(show.endTime)}</td>
-                        <td className="p-2 border">{aud?.location  || 'Loading...'}</td>
-                        <td className="p-2 border">₹{show.blockprices?.[0] || 'N/A'} Onwards</td>
-                        <td className="p-2 border">
-                          <button
-                            className="bg-purple-600 hover:bg-purple-700 text-white text-sm px-3 py-1 rounded"
-                            onClick={() => navigate(`/events/${show.showId}`)}
+        <div 
+          className="fixed inset-0 bg-black/80 backdrop-blur-sm flex justify-center items-center z-50 p-4 animate-in fade-in duration-200"
+          onClick={(e) => e.target === e.currentTarget && setShowListModal(false)}
+        >
+          <div className="bg-gradient-to-br from-gray-900 via-gray-800 to-gray-900 rounded-2xl shadow-2xl max-w-5xl w-full overflow-hidden flex flex-col max-h-[90vh] animate-in zoom-in-95 duration-200 border border-white/10">
+            {/* Header */}
+            <div className="p-6 sm:p-8 border-b border-white/10 bg-gradient-to-r from-purple-600/20 to-transparent">
+              <div className="flex items-start justify-between">
+                <div>
+                  <h2 className="text-xl sm:text-2xl font-bold text-white mb-2">
+                    Available Shows
+                  </h2>
+                  <p className="text-purple-300 font-semibold text-sm sm:text-base">
+                    {selectedEventTitle}
+                  </p>
+                </div>
+                <button
+                  onClick={() => setShowListModal(false)}
+                  className="w-10 h-10 flex items-center justify-center bg-white/10 hover:bg-white/20 backdrop-blur-sm rounded-full text-white text-2xl font-light transition-all duration-200 hover:rotate-90 hover:scale-110 flex-shrink-0"
+                  aria-label="Close modal"
+                >
+                  &times;
+                </button>
+              </div>
+            </div>
+
+            {/* Content */}
+            <div className="flex-1 overflow-y-auto p-6 sm:p-8">
+              {shows.length === 0 ? (
+                <div className="text-center py-12">
+                  <div className="w-16 h-16 mx-auto mb-4 rounded-full bg-purple-600/20 flex items-center justify-center">
+                    <svg className="w-8 h-8 text-purple-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
+                    </svg>
+                  </div>
+                  <p className="text-gray-400 text-lg">No shows available for this event.</p>
+                </div>
+              ) : (
+                <div className="overflow-x-auto">
+                  <div className="min-w-full">
+                    {/* Desktop Table View */}
+                    <div className="hidden md:block">
+                      <table className="w-full">
+                        <thead>
+                          <tr className="border-b border-white/10">
+                            <th className="text-left p-4 text-sm font-bold text-gray-300 uppercase tracking-wider">Auditorium</th>
+                            <th className="text-left p-4 text-sm font-bold text-gray-300 uppercase tracking-wider">Time</th>
+                            <th className="text-left p-4 text-sm font-bold text-gray-300 uppercase tracking-wider">Location</th>
+                            <th className="text-left p-4 text-sm font-bold text-gray-300 uppercase tracking-wider">Price</th>
+                            <th className="text-center p-4 text-sm font-bold text-gray-300 uppercase tracking-wider">Action</th>
+                          </tr>
+                        </thead>
+                        <tbody>
+                          {shows.map((show, idx) => {
+                            const aud = auditorium[show.auditoriumId];
+                            return (
+                              <tr 
+                                key={idx} 
+                                className="border-b border-white/5 hover:bg-white/5 transition-colors duration-150"
+                              >
+                                <td className="p-4 text-white font-semibold">{aud?.name || 'Loading...'}</td>
+                                <td className="p-4 text-gray-300 text-sm">
+                                  <div className="space-y-1">
+                                    <div className="font-medium">{formatCustomDate(show.startTime)}</div>
+                                    <div className="text-gray-400">to {formatCustomDate(show.endTime)}</div>
+                                  </div>
+                                </td>
+                                <td className="p-4 text-gray-300">{aud?.location || 'Loading...'}</td>
+                                <td className="p-4">
+                                  <span className="text-purple-400 font-bold text-lg">₹{show.blockprices?.[0] || 'N/A'}</span>
+                                  <span className="text-gray-500 text-sm ml-1">onwards</span>
+                                </td>
+                                <td className="p-4 text-center">
+                                  <button
+                                    className="bg-gradient-to-r from-purple-600 to-purple-700 hover:from-purple-500 hover:to-purple-600 text-white text-sm font-semibold px-6 py-2.5 rounded-xl transition-all duration-200 shadow-lg shadow-purple-500/30 hover:shadow-xl hover:shadow-purple-500/40 hover:scale-105 active:scale-95"
+                                    onClick={() => navigate(`/events/${show.showId}`)}
+                                  >
+                                    Book Now
+                                  </button>
+                                </td>
+                              </tr>
+                            );
+                          })}
+                        </tbody>
+                      </table>
+                    </div>
+
+                    {/* Mobile Card View */}
+                    <div className="md:hidden space-y-4">
+                      {shows.map((show, idx) => {
+                        const aud = auditorium[show.auditoriumId];
+                        return (
+                          <div 
+                            key={idx}
+                            className="bg-white/5 backdrop-blur-sm rounded-xl p-5 border border-white/10 hover:border-purple-500/50 transition-all duration-200"
                           >
-                            Book Now
-                          </button>
-                        </td>
-                      </tr>
-                    );
-                  })}
-                </tbody>
-              </table>
-            )}
+                            <div className="space-y-4">
+                              <div>
+                                <h3 className="text-white font-bold text-lg mb-1">{aud?.name || 'Loading...'}</h3>
+                                <p className="text-gray-400 text-sm">{aud?.location || 'Loading...'}</p>
+                              </div>
+                              
+                              <div className="space-y-2">
+                                <div className="flex items-center gap-2">
+                                  <svg className="w-4 h-4 text-purple-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
+                                  </svg>
+                                  <div className="text-gray-300 text-sm">
+                                    <div className="font-medium">{formatCustomDate(show.startTime)}</div>
+                                    <div className="text-gray-400">to {formatCustomDate(show.endTime)}</div>
+                                  </div>
+                                </div>
+                              </div>
+
+                              <div className="flex items-center justify-between pt-2 border-t border-white/10">
+                                <div>
+                                  <span className="text-purple-400 font-bold text-xl">₹{show.blockprices?.[0] || 'N/A'}</span>
+                                  <span className="text-gray-500 text-sm ml-1">onwards</span>
+                                </div>
+                                <button
+                                  className="bg-gradient-to-r from-purple-600 to-purple-700 hover:from-purple-500 hover:to-purple-600 text-white text-sm font-semibold px-5 py-2 rounded-xl transition-all duration-200 shadow-lg shadow-purple-500/30 hover:shadow-xl hover:shadow-purple-500/40 active:scale-95"
+                                  onClick={() => navigate(`/events/${show.showId}`)}
+                                >
+                                  Book Now
+                                </button>
+                              </div>
+                            </div>
+                          </div>
+                        );
+                      })}
+                    </div>
+                  </div>
+                </div>
+              )}
+            </div>
           </div>
         </div>
       )}

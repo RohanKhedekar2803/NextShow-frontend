@@ -33,32 +33,46 @@ const GenreButtonList = () => {
   };
 
   return (
-    <div className="bg-gray-900 py-4 px-4 sm:px-6 lg:px-8">
-      {/* Genre Buttons */}
-      <div className="text-yellow-50 font-extrabold text-3xl pt-4 pb-4">Select Event You are Interested In</div>
-      <div className="flex flex-wrap justify-start gap-4 pb-4">
-        {genres.map((genre) => (
-          <button
-            key={genre}
-            onClick={() => handleGenreChange(genre)}
-            className={`px-4 py-2 rounded-lg text-white font-semibold ${selectedGenre === genre ? 'bg-yellow-500' : 'bg-gray-700 hover:bg-gray-600'}`}
-          >
-            {genre}
-          </button>
-        ))}
+    <div className="bg-gradient-to-b from-black via-gray-900 to-black">
+      {/* Genre Buttons Section */}
+      <div className="py-8 sm:py-10 px-4 sm:px-6 lg:px-8">
+        <div className="max-w-7xl mx-auto">
+          <h2 className="text-2xl sm:text-3xl lg:text-4xl font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-yellow-400 via-yellow-300 to-yellow-400 mb-2">
+            Select Event You are Interested In
+          </h2>
+          <div className="h-1 w-24 bg-gradient-to-r from-purple-600 to-yellow-400 rounded-full mb-6"></div>
+          
+          <div className="flex flex-wrap justify-start gap-3 sm:gap-4">
+            {genres.map((genre) => (
+              <button
+                key={genre}
+                onClick={() => handleGenreChange(genre)}
+                className={`px-5 sm:px-6 py-2.5 sm:py-3 rounded-xl text-sm sm:text-base font-bold transition-all duration-300 transform hover:scale-105 active:scale-95 ${
+                  selectedGenre === genre
+                    ? 'bg-gradient-to-r from-yellow-400 to-yellow-500 text-gray-900 shadow-lg shadow-yellow-500/50'
+                    : 'bg-white/10 hover:bg-white/20 backdrop-blur-sm text-white border border-white/20 hover:border-white/40'
+                }`}
+              >
+                {genre}
+              </button>
+            ))}
+          </div>
+        </div>
       </div>
 
       {/* Conditional rendering for 'All' genre or specific genres */}
-      {selectedGenre === 'All' ? (
-  <>
-    <EventList genreType="Movies" />
-    <EventList genreType="Sports" />
-    <EventList genreType="Drama" />
-    <EventList genreType="Comic Shows" />
-  </>
-) : (
-  <EventList genreType={selectedGenre} />
-)}
+      <div className="space-y-8 sm:space-y-12">
+        {selectedGenre === 'All' ? (
+          <>
+            <EventList genreType="Movies" />
+            <EventList genreType="Sports" />
+            <EventList genreType="Drama" />
+            <EventList genreType="Comic Shows" />
+          </>
+        ) : (
+          <EventList genreType={selectedGenre} />
+        )}
+      </div>
     </div>
   );
 };
