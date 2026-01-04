@@ -1,9 +1,10 @@
-import { BASE_URL_EVENTS} from '../utils/config';
+import { BASE_URL} from '../utils/config';
 import axios from 'axios';
 import { getEventById } from './homepage'
 
-const URL = BASE_URL_EVENTS + '/events';
-const showsurl = `http://localhost:8080/shows`;
+
+const URL = `${BASE_URL}/eventsAPI/events`;
+const showsurl = `${BASE_URL}/shows`;
 
 // ✅ Hardcoded JWT Tokeney
 const JWT_TOKEN = localStorage.getItem('token');
@@ -16,7 +17,7 @@ const headers = {
 // 🟩 Get all events
 export const getAllTheaters = async () => {
   try {
-    const response = await axios.get(`${BASE_URL_EVENTS}/auditoriums`, { headers });
+    const response = await axios.get(`${BASE_URL}/eventsAPI/auditoriums`, { headers });
     return response.data;
   } catch (error) {
     console.error('Error fetching all theaters:', error);
@@ -85,7 +86,7 @@ export const getShowById = async (id) => {
       // Fetch auditorium info for this show's auditoriumId
       let auditoriumInfo = null;
       try {
-        const audResponse = await axios.get(`${BASE_URL_EVENTS}/auditoriums/${show.auditoriumId}`, { headers });
+        const audResponse = await axios.get(`${BASE_URL}/eventsAPI/auditoriums/${show.auditoriumId}`, { headers });
         auditoriumInfo = audResponse.data;
       } catch (e) {
         console.error(`Failed to fetch auditorium for auditoriumId=${show.auditoriumId}`, e);

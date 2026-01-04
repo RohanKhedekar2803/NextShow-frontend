@@ -2,6 +2,7 @@ import React, { useEffect , useState} from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import { getShowById } from '@/Services/theaters';
+import { BASE_URL} from '../utils/config';
 
 const PaymentSuccessPage = () => {
   const { search } = useLocation();
@@ -19,7 +20,7 @@ const PaymentSuccessPage = () => {
     try {
       const JWT_TOKEN = localStorage.getItem('token');
       await axios.get(
-        `http://localhost:8080/Bookings/status/updatebooked`,
+        `${BASE_URL}/Bookings/status/updatebooked`,
         {
           headers: {
             Authorization: `Bearer ${JWT_TOKEN}`,

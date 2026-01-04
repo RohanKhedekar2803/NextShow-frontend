@@ -1,6 +1,8 @@
+import { BASE_URL} from '../utils/config';
+
 export const register = async (username , password) => {
     try {
-      const response = await fetch("http://localhost:8080/auth/register", {
+      const response = await fetch(`${BASE_URL}/auth/register`, {
         method: "POST",
         headers: {
           "Content-Type": "application/x-www-form-urlencoded",
@@ -23,7 +25,7 @@ export const register = async (username , password) => {
 
   export const login = async (username, password) => {
     try {
-      const response = await fetch("http://localhost:8080/auth/login", {
+      const response = await fetch(`${BASE_URL}/auth/login`, {
         method: "POST",
         headers: {
           "Content-Type": "application/x-www-form-urlencoded",
@@ -58,7 +60,7 @@ export const register = async (username , password) => {
   
   export const getusername = async (userid) => {
     try {
-      const response = await fetch("http://localhost:8080/auth/getuser/1", {
+      const response = await fetch(`${BASE_URL}/auth/getuser/1`, {
         method: "POST",
         headers: {
           "Content-Type": "application/x-www-form-urlencoded",
@@ -77,3 +79,28 @@ export const register = async (username , password) => {
       console.error("Registration error:", err);
     }
   };
+
+
+  export const getuserid = async (username) => {
+    try {
+      const response = await fetch(`${BASE_URL}/auth/getuserbymail/${username}`, {
+        method: "GET",
+        headers: {
+          "Accept": "application/json",
+        },
+      });
+  
+      if (!response.ok) {
+        throw new Error(`Failed to fetch user: ${response.status}`);
+      }
+  
+      const user = await response.json(); 
+      console.log(user);
+  
+      return user.id; 
+    } catch (err) {
+      console.error("Get user error:", err);
+      return null;
+    }
+  };
+  

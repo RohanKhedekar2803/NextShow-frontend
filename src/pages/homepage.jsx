@@ -1,30 +1,57 @@
-import React, { useEffect } from 'react'
-import Navbar from '@/components/ui/Navbar'
-import { Form } from '@/components/ui/form'
-import Banner from '@/components/ui/Banner'
-import EventList from '@/components/ui/EventList'
-import GenreButtonList from '@/components/ui/GenreButtonList'
+import { jwtDecode } from "jwt-decode";
+import { useEffect } from "react";
+import Navbar from "@/components/ui/Navbar";
+import Banner from "@/components/ui/Banner";
+import GenreButtonList from "@/components/ui/GenreButtonList";
+import {getuserid}  from "@/Services/auth";
+
 
 const HomePage = () => {
   useEffect(() => {
-    // Extract token from URL fragment
-    const hash = window.location.hash;
-    const tokenMatch = hash.match(/token=([^&]+)/);
-    if (tokenMatch) {
+    const handleAuthFlow = async () => {
+      const hash = window.location.hash;
+      const tokenMatch = hash.match(/token=([^&]+)/);
+
+      if (!tokenMatch) return;
+
       const token = tokenMatch[1];
-      console.log("JWT token from URL fragment:", token);
-      localStorage.setItem('token', token); // Store for later use
-      // Optional: remove token from URL for cleanliness
+
+      // 1️⃣ Store JWT
+      localStorage.setItem("token", token);
+
+      // 2️⃣ Decode username
+      const decoded = jwtDecode(token);
+      const username = decoded.sub;
+
+      localStorage.setItem("username", username);
+
+      // 3️⃣ Fetch userId from backend (WAIT for it)
+      try {
+        const userId = await getuserid(username);
+
+        if (userId) {
+          localStorage.setItem("user_id", userId.toString());
+        } else {
+          console.error("User ID not found for username:", username);
+        }
+      } catch (err) {
+        console.error("Failed to fetch userId:", err);
+      }
+
+      // 4️⃣ Clean URL
       window.history.replaceState(null, null, window.location.pathname);
-    }
+    };
+
+    handleAuthFlow();
   }, []);
+
   return (
     <>
-        <Navbar />
-        <Banner />
-        <GenreButtonList />
+      <Navbar />
+      <Banner />
+      <GenreButtonList />
     </>
-  )
-}
+  );
+};
 
 export default HomePage

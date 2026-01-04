@@ -1,7 +1,7 @@
-import { BASE_URL_EVENTS} from '../utils/config';
+import { BASE_URL} from '../utils/config';
 import axios from 'axios';
 
-const URL = BASE_URL_EVENTS + '/events';
+const URL = `${BASE_URL}/eventsAPI/events`;
 
 
 // ✅ Hardcoded JWT Tokeney
@@ -47,7 +47,7 @@ export const addEvent = async (eventData) => {
 
 export const getAllshows = async (eventData) => {
   try {
-    const response = await axios.get('http://localhost:8080/shows', { headers });
+    const response = await axios.get(`${BASE_URL}/shows`, { headers });
     console.log(response.data)
     return response.data;
   } catch (error) {
@@ -58,7 +58,7 @@ export const getAllshows = async (eventData) => {
 
 export const getshowByAuditoriumId = async (id) => {
   try {
-    const response = await axios.get(`http://localhost:8080/eventsAPI/auditoriums/${id}`, { headers });
+    const response = await axios.get(`${BASE_URL}/eventsAPI/auditoriums/${id}`, { headers });
     return response.data;
   } catch (error) {
     console.error(`Error fetching event with ID ${id}:`, error);

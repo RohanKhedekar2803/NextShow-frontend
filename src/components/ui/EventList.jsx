@@ -2,6 +2,8 @@ import React, { useRef, useState, useEffect, useCallback } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
 import Event from './Event';
 import { getAllEvents, getAllshows, getshowByAuditoriumId } from '@/Services/homepage';
+import { toast } from "react-hot-toast";
+
 
 export default function EventList({ genreType }) {
   const navigate = useNavigate();
@@ -97,7 +99,8 @@ export default function EventList({ genreType }) {
   };
 
   const handleBookShow = (show) => {
-    alert(`Booking show with ID: ${show.id}`);
+  
+    toast.success(`Booking show with ID: ${show.id}`);
   };
 
   return (

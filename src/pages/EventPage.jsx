@@ -9,6 +9,7 @@ import {
   fetchStripeCheckoutUrl,
   getSoldTicketsForShow
 } from '@/Services/Bookingpage';
+import { toast } from "react-hot-toast";
 
 const EventPage = () => {
   const { id } = useParams();
@@ -22,21 +23,52 @@ const EventPage = () => {
   const [sectionPrices, setSectionPrices] = useState([]);
   const [finalprices, setFinalprices] = useState(0);
   const [bookedSeats, setBookedSeats] = useState([]); // Booked seats in UI format
+  const [selectedSection, setSelectedSection] = useState(null);
 
-  const toggleSeat = (sectionIdx, globalRowIdx, seatIdx) => {
-    const seatId = `S${sectionIdx}-R${globalRowIdx}-C${seatIdx}`;
-    if (bookedSeats.includes(seatId)) return; // Ignore clicks on booked seats
 
-    setSelectedSeats((prev) =>
-      prev.includes(seatId)
-        ? prev.filter((id) => id !== seatId)
-        : [...prev, seatId]
-    );
+  const toggleSeat = (sectionIdx, rowIdx, seatIdx) => {
+    const seatId = `S${sectionIdx}-R${rowIdx}-C${seatIdx}`;
+  
+    // If selecting first seat → lock section
+    if (selectedSeats.length === 0) {
+      setSelectedSection(sectionIdx);
+    }
+  
+    // ❌ Prevent selecting from another section
+    if (
+      selectedSection !== null &&
+      sectionIdx !== selectedSection &&
+      !selectedSeats.includes(seatId)
+    ) {
+      toast.error("Please select seats from the same section only.");
+      return;
+    }
+  
+    setSelectedSeats((prev) => {
+      // Deselect
+      if (prev.includes(seatId)) {
+        const updated = prev.filter((id) => id !== seatId);
+  
+        // If no seats left → unlock section
+        if (updated.length === 0) {
+          setSelectedSection(null);
+        }
+  
+        return updated;
+      }
+  
+      // Select
+      return [...prev, seatId];
+    });
   };
+
+  
 
   const handleFinalBooking = async () => {
     if (selectedSeats.length === 0) {
-      alert('Please select at least one seat.');
+  
+      toast.warning('Please select at least one seat.');
+
       return;
     }
 
@@ -78,7 +110,8 @@ const EventPage = () => {
           if (checkoutUrl) {
             window.location.href = checkoutUrl;
           } else {
-            alert('❌ Could not retrieve payment link. Please try again.');
+           
+            toast.error('❌ Could not retrieve payment link. Please try again.');
           }
           break;
         } else {
@@ -86,7 +119,8 @@ const EventPage = () => {
           if (attempts < maxAttempts) {
             await new Promise((resolve) => setTimeout(resolve, 2000));
           } else {
-            alert('❌ Booking not ready after multiple attempts. Please try again.');
+            
+            toast.error('❌ Booking not ready after multiple attempts. Please try again.');
           }
         }
       }
@@ -94,8 +128,9 @@ const EventPage = () => {
       setModalOpen(false);
       setSelectedSeats([]);
     } catch (error) {
-      alert('❌ Booking failed! Check console.');
-      console.error('Booking error:', error);
+    
+      toast.error('❌ Booking failed! Check console.');
+      // console.error('Booking error:', error);
     }
   };
 
@@ -389,20 +424,25 @@ const EventPage = () => {
                               const seatId = `S${sectionIdx}-R${globalRowIdx}-C${seatIdx}`;
                               const isSelected = selectedSeats.includes(seatId);
                               const isBooked = bookedSeats.includes(seatId);
+                              const isOtherSectionDisabled =
+                                selectedSection !== null && sectionIdx !== selectedSection;
 
                               return (
                                 <button
                                   key={seatId}
-                                  disabled={isBooked}
+                                  disabled={isBooked || isOtherSectionDisabled}
                                   onClick={() => toggleSeat(sectionIdx, globalRowIdx, seatIdx)}
                                   className={`
                                     rounded-lg font-mono font-semibold transition-all duration-200
                                     ${fontSize}
-                                    ${isBooked
-                                      ? 'bg-red-600/60 border-2 border-red-500 cursor-not-allowed opacity-60'
-                                      : isSelected
-                                      ? 'bg-gradient-to-br from-green-500 to-green-600 border-2 border-green-400 shadow-lg shadow-green-500/30 scale-110'
-                                      : 'bg-gray-700 hover:bg-gray-600 border-2 border-gray-600 hover:border-gray-500 hover:scale-105 active:scale-95'
+                                    ${
+                                      isBooked
+                                        ? 'bg-red-600/60 border-2 border-red-500 cursor-not-allowed opacity-60'
+                                        : isOtherSectionDisabled
+                                        ? 'bg-gray-800 border-2 border-gray-700 cursor-not-allowed opacity-40'
+                                        : isSelected
+                                        ? 'bg-gradient-to-br from-green-500 to-green-600 border-2 border-green-400 shadow-lg shadow-green-500/30 scale-110'
+                                        : 'bg-gray-700 hover:bg-gray-600 border-2 border-gray-600 hover:border-gray-500 hover:scale-105 active:scale-95'
                                     }
                                   `}
                                   style={{

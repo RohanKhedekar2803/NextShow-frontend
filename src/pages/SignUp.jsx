@@ -11,13 +11,20 @@ import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { FaGoogle } from "react-icons/fa";
 import {register , login}  from "@/Services/auth";
-import { useNavigate } from 'react-router-dom';
+import { useNavigate , useLocation } from 'react-router-dom';
+import { toast } from "react-hot-toast";
+import { BASE_URL} from '../utils/config';
+
 
 export default function SignUp() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
   const navigate = useNavigate();
+  const location = useLocation();
+
+  const redirectTo = location.state?.from?.pathname || "/homepage";
+  
 
   const validateForm = () => {
     const emailRegex = /^[^@\s]+@[^@\s]+\.(com)$/;
@@ -41,12 +48,18 @@ export default function SignUp() {
         const data = await register(email, password);
         console.log(data);
         if (data === "User registered successfully!") {
-          alert("User Registered! Please login.");
+  
+          toast.success("User Registered!");
+          toast.success("Please Login with same credentials");
+          // navigate(redirectTo, { replace: true });
         } else {
-          alert("Registration failed please use unique email");
+        
+          toast.error("Registration failed please use unique email");
         }
       } catch (error) {
-        alert("Error occurred: " + error.message);
+      
+        toast.error("Error occurred: " + error.message);
+        
       }
     }
   };
@@ -58,23 +71,23 @@ export default function SignUp() {
         const data = await login(email, password);
         if (data && data["JWT-TOKEN"]) {
            navigate(`/homepage`);
-          // Optionally redirect or update UI here
+         
         } else {
-          alert("Login failed. Please check your credentials.");
+  
+          toast.error("Login failed. Please check your credentials.");
         }
       } catch (error) {
-        alert("Error during login: " + error.message);
+
+        toast.error("Error during login: " + error.message);
       }
     }
   };
   
-  
-
   const handleGoogleClick = (event) => {
     event.preventDefault();
     const clientId =
       "1013179941500-37ijcddmm4l7mpe4ve55351cmqkklulk.apps.googleusercontent.com";
-    const redirectUri = "http://localhost:8080/auth/google/callback";
+    const redirectUri = `${BASE_URL}/auth/google/callback`;
     const responseType = "code";
     const scope = "openid email profile";
     const authUrl = `https://accounts.google.com/o/oauth2/v2/auth?client_id=${clientId}&redirect_uri=${encodeURIComponent(

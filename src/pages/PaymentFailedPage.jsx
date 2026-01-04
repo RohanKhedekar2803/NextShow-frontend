@@ -1,6 +1,7 @@
 import React, { useEffect } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
 import axios from 'axios';
+import { BASE_URL} from '../utils/config';
 
 const PaymentFailedPage = () => {
   const navigate = useNavigate();
@@ -15,7 +16,7 @@ const PaymentFailedPage = () => {
     try {
       const JWT_TOKEN = localStorage.getItem('token');
       await axios.get(
-        `http://localhost:8080/Bookings/status/updatecancel`,
+        `${BASE_URL}/Bookings/status/updatecancel`,
         {
           headers: {
             Authorization: `Bearer ${JWT_TOKEN}`,
