@@ -189,12 +189,27 @@ const EventPage = () => {
 
         const uiSeatIds = soldSeats.map(seat => {
           const parts = seat.split('-'); // ['S013', 'C001', 'R001']
-          // Assuming one section (0), adjust if multiple sections logic is needed
-          const sectionIdx = 0;
-          const col = parseInt(parts[1].substring(1), 10) - 1; // 'C001' => 0
-          const row = parseInt(parts[2].substring(1), 10) - 1; // 'R001' => 0
-          return `S${sectionIdx}-R${row}-C${col}`; // 'S0-R0-C0' format for UI
-        });
+
+          const col = parseInt(parts[1].substring(1), 10) - 1;
+          const globalRow = parseInt(parts[2].substring(1), 10) - 1;
+
+          // 🔑 Determine section index dynamically
+          let runningRowCount = 0;
+          let sectionIdx = 0;
+
+          for (let i = 0; i < seatLayout.length; i++) {
+            const sectionRowCount = seatLayout[i].length;
+            if (globalRow < runningRowCount + sectionRowCount) {
+              sectionIdx = i;
+              break;
+            }
+            runningRowCount += sectionRowCount;
+          }
+
+  const localRow = globalRow - runningRowCount;
+
+  return `S${sectionIdx}-R${globalRow}-C${col}`;
+});
 
         setBookedSeats(uiSeatIds);
       } catch (err) {
