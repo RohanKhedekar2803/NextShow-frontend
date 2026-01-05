@@ -91,34 +91,72 @@ const PaymentSuccessPage = () => {
   };
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-green-50 p-6">
-      <div className="bg-white rounded-xl shadow-lg p-8 max-w-lg w-full text-center">
-        <h1 className="text-3xl font-bold text-green-600 mb-2">🎉 Payment Successful!</h1>
-        <p className="text-gray-700 mb-6">Thank you for your booking. Your payment has been processed successfully.</p>
+  <div className="min-h-screen flex items-center justify-center bg-gradient-to-b from-black via-gray-900 to-black p-6">
+    <div className="bg-gradient-to-br from-gray-900 via-gray-800 to-gray-900 rounded-2xl shadow-2xl p-8 max-w-lg w-full text-center border border-white/10">
+      
+      {/* Heading */}
+      <h1 className="text-3xl font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-purple-400 to-green-400 mb-2">
+        🎉 Payment Successful!
+      </h1>
 
-        <div className="bg-gray-100 rounded-lg p-4 mb-6">
-          <h3 className="text-lg font-semibold mb-2">🎟️ Booking Details:</h3>
+      <p className="text-gray-300 mb-6">
+        Thank you for your booking. Your payment has been processed successfully.
+      </p>
 
-          <p><span className="font-medium">Show:</span> {eventName}</p>  
-          <p><span className="font-medium">Seat(s):</span> {seatId}</p>
-          <p><span className="font-medium">User:</span> { localStorage.getItem('username')}</p>
+      {/* Booking details */}
+      <div className="bg-white/5 backdrop-blur-sm rounded-xl p-4 mb-6 border border-white/10 text-left">
+        <h3 className="text-lg font-semibold text-purple-400 mb-3">
+          🎟️ Booking Details
+        </h3>
 
-          <p><span className="font-medium">Start Time:</span> {formatCustomDate(start)}</p>
-          <p><span className="font-medium">Location :</span> {theatername}</p>
-        </div>
-
-        <p className="mb-4">📨 A confirmation email with your booking details has been sent. Please check your inbox!</p>
-        <p className="mb-6">We hope you enjoy the show. 🎬🍿</p>
-
-        <button
-          onClick={handleBackClick}
-          className="bg-green-600 hover:bg-green-700 text-white font-semibold py-2 px-4 rounded transition duration-200"
-        >
-          🔙 Back to Theater Page
-        </button>
+        <p className="text-gray-300">
+          <span className="font-medium text-white">Show:</span> {eventName}
+        </p>
+        <p className="text-gray-300">
+          <span className="font-medium text-white">Seat(s):</span> {seatId}
+        </p>
+        <p className="text-gray-300">
+          <span className="font-medium text-white">User:</span>{" "}
+          {localStorage.getItem("username")}
+        </p>
+        <p className="text-gray-300">
+          <span className="font-medium text-white">Start Time:</span>{" "}
+          {formatCustomDate(start)}
+        </p>
+        <p className="text-gray-300">
+          <span className="font-medium text-white">Location:</span>{" "}
+          {theatername}
+        </p>
       </div>
+
+      <p className="text-gray-400 mb-2">
+        📨 A confirmation email with your booking details has been sent.
+      </p>
+      <p className="text-gray-400 mb-6">
+        We hope you enjoy the show 🎬🍿
+      </p>
+
+      {/* Action */}
+      <button
+        onClick={handleBackClick}
+        className="
+          bg-gradient-to-r from-purple-600 to-purple-700
+          hover:from-purple-500 hover:to-purple-600
+          text-white font-bold
+          py-3 px-6
+          rounded-xl
+          transition-all duration-200
+          shadow-lg shadow-purple-500/30
+          hover:shadow-xl hover:shadow-purple-500/40
+          hover:scale-105 active:scale-95
+        "
+      >
+        🔙 Back to Theater Page
+      </button>
     </div>
-  );
+  </div>
+);
+
 };
 
 export default PaymentSuccessPage;

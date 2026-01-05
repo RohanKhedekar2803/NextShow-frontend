@@ -88,7 +88,7 @@ const EventPage = () => {
     setFinalprices(totalPrice);
 
     try {
-      const userIdStr = localStorage.getItem('user_id'); // "22"
+      const userIdStr = localStorage.getItem('user_id'); 
       const userId = userIdStr;
       const showId = String(id);
 

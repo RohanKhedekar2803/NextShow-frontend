@@ -40,6 +40,8 @@ const HomePage = () => {
 
       // 4️⃣ Clean URL
       window.history.replaceState(null, null, window.location.pathname);
+
+      window.location.reload();
     };
 
     handleAuthFlow();

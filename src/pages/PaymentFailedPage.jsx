@@ -45,27 +45,56 @@ const PaymentFailedPage = () => {
   };
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-red-50 p-6">
-      <div className="bg-white rounded-xl shadow-lg p-8 max-w-lg w-full text-center">
-        <h1 className="text-3xl font-bold text-red-600 mb-2">❌ Payment Failed</h1>
-        <p className="text-gray-700 mb-6">Oops! Something went wrong while processing your payment.</p>
+  <div className="min-h-screen flex items-center justify-center bg-gradient-to-b from-black via-gray-900 to-black p-6">
+    <div className="bg-gradient-to-br from-gray-900 via-gray-800 to-gray-900 rounded-2xl shadow-2xl p-8 max-w-lg w-full text-center border border-white/10">
 
-        <div className="bg-gray-100 rounded-lg p-4 mb-6">
-          <p className="font-medium text-red-500">Your booking could not be completed at this time.</p>
-        </div>
+      {/* Heading */}
+      <h1 className="text-3xl font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-red-400 to-purple-400 mb-2">
+        ❌ Payment Failed
+      </h1>
 
-        <p className="mb-4">Please try again later or contact support if the issue persists.</p>
-        <p className="mb-6">We’re here to help. 💬</p>
+      <p className="text-gray-300 mb-6">
+        Oops! Something went wrong while processing your payment.
+      </p>
 
-        <button
-          onClick={handleBackClick}
-          className="bg-red-600 hover:bg-red-700 text-white font-semibold py-2 px-4 rounded transition duration-200"
-        >
-          🔙 Back to Theater Page
-        </button>
+      {/* Info box */}
+      <div className="bg-white/5 backdrop-blur-sm rounded-xl p-4 mb-6 border border-white/10 text-left">
+        <p className="text-red-400 font-medium">
+          Your booking could not be completed at this time.
+        </p>
+        <p className="text-gray-400 mt-2">
+          No amount was deducted. Please try again or choose different seats.
+        </p>
       </div>
+
+      <p className="text-gray-400 mb-2">
+        If the issue persists, please contact support.
+      </p>
+      <p className="text-gray-400 mb-6">
+        We’re here to help 💬
+      </p>
+
+      {/* Action */}
+      <button
+        onClick={handleBackClick}
+        className="
+          bg-gradient-to-r from-purple-600 to-purple-700
+          hover:from-purple-500 hover:to-purple-600
+          text-white font-bold
+          py-3 px-6
+          rounded-xl
+          transition-all duration-200
+          shadow-lg shadow-purple-500/30
+          hover:shadow-xl hover:shadow-purple-500/40
+          hover:scale-105 active:scale-95
+        "
+      >
+        🔙 Back to Theater Page
+      </button>
     </div>
-  );
+  </div>
+);
+
 };
 
 export default PaymentFailedPage;

@@ -1,15 +1,19 @@
 import { Navigate, useLocation } from "react-router-dom";
+import toast from "react-hot-toast";
 
 const ProtectedRoute = ({ children }) => {
-  const token = localStorage.getItem("token");
   const location = useLocation();
+  const token = localStorage.getItem("token");
 
-  // Not logged in → redirect to login
   if (!token) {
-    return <Navigate to="/" replace state={{ from: location }} />;
+    // ✅ Toast will show only once
+    toast.error("Please login before booking tickets", {
+      id: "auth-required",
+    });
+
+    return <Navigate to="/" state={{ from: location }} replace />;
   }
 
-  // Logged in → allow access
   return children;
 };
 
