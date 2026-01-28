@@ -1,5 +1,6 @@
-import axios from 'axios';
+
 import { BASE_URL} from '../utils/config';
+import api from '../utils/axiosInstance';
 
 const BASE_BOOKING_URL = `${BASE_URL}/Bookings`;
 const JWT_TOKEN = localStorage.getItem('token'); // Replace with actual token
@@ -11,7 +12,7 @@ export const postBooking = async ({ userId, showId, seats, finalPrice }) => {
       'Content-Type': 'application/json',
       Authorization: `Bearer ${JWT_TOKEN}`,
     };
-    console.log("hi")
+    // console.log("hi")
     const bookingBody = {
       userId,
       showId,
@@ -23,7 +24,7 @@ export const postBooking = async ({ userId, showId, seats, finalPrice }) => {
     };
     console.log(bookingBody)
 
-    const response = await axios.post(`${BASE_BOOKING_URL}/publish/events-abc`, bookingBody, { headers });
+    const response = await api.post(`${BASE_BOOKING_URL}/publish/events-abc`, bookingBody, { headers });
 
     console.log('✅ Booking Published:', response.data);
     return response.data;
@@ -41,12 +42,12 @@ export const getBookingStatus = async (userId, showId, firstSeat) => {
       'Content-Type': 'application/json',
       Authorization: `Bearer ${JWT_TOKEN}`,
     };
-    const cleanUserId = userId.replace(/^0+/, '');
+    const cleanUserId = userId
     const cleanShowId = showId.replace(/^0+/, '');
     const url = `${BASE_BOOKING_URL}/status/${cleanUserId}/${cleanShowId}/${firstSeat}`;
     
     console.log(url)
-    const response = await axios.get(url, { headers });
+    const response = await api.get(url, { headers });
 
     console.log('✅ Booking Status:', response.data);
     return response.data;
@@ -58,28 +59,27 @@ export const getBookingStatus = async (userId, showId, firstSeat) => {
 
 export const fetchStripeCheckoutUrl = async (userId, showId, seatId) => {
   try {
-    const cleanUserId = userId.replace(/^0+/, '');
+    const cleanUserId = userId
     const cleanShowId = showId.replace(/^0+/, '');
-    console.log(`${BASE_URL}/payment-checkout/${cleanUserId}/${cleanShowId}/${seatId}`)
-    const response = await fetch(`${BASE_URL}/payment-checkout/${cleanUserId}/${cleanShowId}/${seatId}`, {
-      method: 'GET',
-      headers: {
-        'Authorization': `Bearer ${JWT_TOKEN}`
-      }
-    });
 
-    if (!response.ok) {
-      throw new Error('Failed to get checkout URL');
-    }
+    const headers = {
+      'Content-Type': 'application/json',
+      Authorization: `Bearer ${JWT_TOKEN}`,
+    };
 
-    const checkoutUrl = await response.text();
-    return checkoutUrl;
+    const url = `${BASE_URL}/payment-checkout/${cleanUserId}/${cleanShowId}/${seatId}`;
+    console.log(url);
+
+    const response = await api.get(url, {headers});
+
+    // If backend returns plain text
+    return response.data;
+
   } catch (error) {
-    console.error('❌ Error fetching checkout URL:', error);
+    console.error("❌ Error fetching checkout URL:", error);
     return null;
   }
 };
-
 
 export const getSoldTicketsForShow = async (rawShowId) => {
   try {
@@ -91,7 +91,7 @@ export const getSoldTicketsForShow = async (rawShowId) => {
       Authorization: `Bearer ${JWT_TOKEN}`,
     };
 
-    const response = await axios.get(`${BASE_URL}/Bookings/status/getbookedseatsstatus/${paddedShowId}` , {headers});
+    const response = await api.get(`${BASE_URL}/Bookings/status/getbookedseatsstatus/${paddedShowId}` , {headers});
     
     console.log('Booked Seats Status:', response.data);
     return response.data;

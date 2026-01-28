@@ -1,5 +1,5 @@
-export const BASE_DOMAIN = "localhost";
+export const DOMAIN_BACKEND_GATEWAY = "localhost";
 
-export const BASE_PORT = "8080";
+export const BACKEND_GATEWAY_PORT = "8080";
 
-export const BASE_URL = `http://${BASE_DOMAIN}:${BASE_PORT}`;
+export const BASE_URL = `http://${DOMAIN_BACKEND_GATEWAY}:${BACKEND_GATEWAY_PORT}`;

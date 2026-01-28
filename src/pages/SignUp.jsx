@@ -69,7 +69,7 @@ export default function SignUp() {
       console.log("Login button clicked");
       try {
         const data = await login(email, password);
-        if (data && data["JWT-TOKEN"]) {
+        if (data && data["JWT-ACCESS-TOKEN"]) {
            navigate(`/homepage`);
          
         } else {
@@ -104,7 +104,7 @@ export default function SignUp() {
             Welcome to Nextshow
           </CardTitle>
           <CardDescription className="text-gray-600">
-            Enter your information to use Nextshow
+            Get started with Nextshow
           </CardDescription>
         </CardHeader>
         <CardContent>

@@ -1,50 +1,43 @@
 import { jwtDecode } from "jwt-decode";
-import { useEffect } from "react";
+import { useEffect, useRef } from "react";
 import Navbar from "@/components/ui/Navbar";
 import Banner from "@/components/ui/Banner";
 import GenreButtonList from "@/components/ui/GenreButtonList";
-import {getuserid}  from "@/Services/auth";
-
-
+import { getUserId } from "@/Services/auth";
 const HomePage = () => {
+  const ranOnce = useRef(false);
+
   useEffect(() => {
-    const handleAuthFlow = async () => {
-      const hash = window.location.hash;
-      const tokenMatch = hash.match(/token=([^&]+)/);
+    if (ranOnce.current) return;
+    ranOnce.current = true;
 
-      if (!tokenMatch) return;
-
-      const token = tokenMatch[1];
-
-      // 1️⃣ Store JWT
-      localStorage.setItem("token", token);
-
-      // 2️⃣ Decode username
-      const decoded = jwtDecode(token);
-      const username = decoded.sub;
-
-      localStorage.setItem("username", username);
-
-      // 3️⃣ Fetch userId from backend (WAIT for it)
-      try {
-        const userId = await getuserid(username);
-
-        if (userId) {
-          localStorage.setItem("user_id", userId.toString());
-        } else {
-          console.error("User ID not found for username:", username);
-        }
-      } catch (err) {
-        console.error("Failed to fetch userId:", err);
+    if(localStorage.getItem("token") && localStorage.getItem("refresh_token")){
+      console.log("via username password")
+    }else{
+      const hash = window.location.hash.substring(1);
+      const params = new URLSearchParams(hash);
+  
+      const accessToken = params.get("accessToken");
+      const refreshToken = params.get("refreshToken");
+  
+      if (!accessToken || !refreshToken) {
+        console.warn("Tokens missing in URL");
+        return;
       }
-
-      // 4️⃣ Clean URL
-      window.history.replaceState(null, null, window.location.pathname);
-
+  
+      // ⚠️ DEV ONLY
+      localStorage.setItem("token", accessToken);
+      localStorage.setItem("refresh_token", refreshToken);
+  
+      const decoded = jwtDecode(accessToken);
+      localStorage.setItem("username", decoded.sub);
+  
+      // 🔥 MUST clean URL immediately
+      window.history.replaceState({}, document.title, "/homepage");
       window.location.reload();
-    };
+    }
 
-    handleAuthFlow();
+
   }, []);
 
   return (
@@ -56,4 +49,5 @@ const HomePage = () => {
   );
 };
 
-export default HomePage
+
+export default HomePage;

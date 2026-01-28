@@ -352,7 +352,7 @@ const TheatersPage = () => {
               type="text"
               value={filterTheater}
               onChange={handleInputChangeTheater}
-              placeholder="Search for a Theater..."
+              placeholder="Search for a Hall..."
               className="w-full pl-12 pr-10 py-3 rounded-xl bg-white/10 backdrop-blur-sm text-white placeholder-gray-400 border border-white/20 focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-purple-500 transition-all duration-200"
             />
             {filterTheater && (

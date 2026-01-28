@@ -1,5 +1,5 @@
 import { BASE_URL} from '../utils/config';
-import axios from 'axios';
+import api from '../utils/axiosInstance';
 
 const URL = `${BASE_URL}/eventsAPI/events`;
 
@@ -15,7 +15,7 @@ const headers = {
 // 🟩 Get all events
 export const getAllEvents = async () => {
   try {
-    const response = await axios.get(URL, { headers });
+    const response = await api.get(URL, { headers });
     return response.data;
   } catch (error) {
     console.error('Error fetching all events:', error);
@@ -26,7 +26,7 @@ export const getAllEvents = async () => {
 // 🟩 Get event by ID
 export const getEventById = async (id) => {
   try {
-    const response = await axios.get(`${URL}/${id}`, { headers });
+    const response = await api.get(`${URL}/${id}`, { headers });
     return response.data;
   } catch (error) {
     console.error(`Error fetching event with ID ${id}:`, error);
@@ -37,7 +37,7 @@ export const getEventById = async (id) => {
 // 🟩 Add a new event (POST)
 export const addEvent = async (eventData) => {
   try {
-    const response = await axios.post(URL, eventData, { headers });
+    const response = await api.post(URL, eventData, { headers });
     return response.data;
   } catch (error) {
     console.error('Error adding new event:', error);
@@ -47,7 +47,7 @@ export const addEvent = async (eventData) => {
 
 export const getAllshows = async (eventData) => {
   try {
-    const response = await axios.get(`${BASE_URL}/shows`, { headers });
+    const response = await api.get(`${BASE_URL}/shows`, { headers });
     console.log(response.data)
     return response.data;
   } catch (error) {
@@ -58,7 +58,7 @@ export const getAllshows = async (eventData) => {
 
 export const getshowByAuditoriumId = async (id) => {
   try {
-    const response = await axios.get(`${BASE_URL}/eventsAPI/auditoriums/${id}`, { headers });
+    const response = await api.get(`${BASE_URL}/eventsAPI/auditoriums/${id}`, { headers });
     return response.data;
   } catch (error) {
     console.error(`Error fetching event with ID ${id}:`, error);

@@ -1,5 +1,5 @@
 import { BASE_URL} from '../utils/config';
-import axios from 'axios';
+import api from '../utils/axiosInstance';
 import { getEventById } from './homepage'
 
 
@@ -17,7 +17,7 @@ const headers = {
 // 🟩 Get all events
 export const getAllTheaters = async () => {
   try {
-    const response = await axios.get(`${BASE_URL}/eventsAPI/auditoriums`, { headers });
+    const response = await api.get(`${BASE_URL}/eventsAPI/auditoriums`, { headers });
     return response.data;
   } catch (error) {
     console.error('Error fetching all theaters:', error);
@@ -71,7 +71,7 @@ export const getAllshowsByTheaterid = async (audid) => {
 
 export const getShowById = async (id) => {
     try {
-      const response = await axios.get(`${showsurl}/${id}`, { headers });
+      const response = await api.get(`${showsurl}/${id}`, { headers });
       const show = response.data;
   
       // Fetch event info for this show's eventId
@@ -86,7 +86,7 @@ export const getShowById = async (id) => {
       // Fetch auditorium info for this show's auditoriumId
       let auditoriumInfo = null;
       try {
-        const audResponse = await axios.get(`${BASE_URL}/eventsAPI/auditoriums/${show.auditoriumId}`, { headers });
+        const audResponse = await api.get(`${BASE_URL}/eventsAPI/auditoriums/${show.auditoriumId}`, { headers });
         auditoriumInfo = audResponse.data;
       } catch (e) {
         console.error(`Failed to fetch auditorium for auditoriumId=${show.auditoriumId}`, e);

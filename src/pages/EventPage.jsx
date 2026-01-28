@@ -3,6 +3,7 @@ import { useParams } from 'react-router-dom';
 import { X, Clock, Calendar, Ticket, Monitor  } from 'lucide-react';
 import Navbar from '@/components/ui/Navbar';
 import { getShowById } from '@/Services/theaters';
+import { getUserId } from "@/Services/auth";
 import {
   postBooking,
   getBookingStatus,
@@ -88,6 +89,20 @@ const EventPage = () => {
     setFinalprices(totalPrice);
 
     try {
+      
+        const email = localStorage.getItem("username")
+        // 3️⃣ Call backend to fetch userId
+        
+        const userIdx = await getUserId(email);
+
+        
+
+        if (userIdx) {
+          localStorage.setItem("user_id", String(userIdx));
+        } else {
+          console.warn("User ID not found for email:", email);
+        }
+
       const userIdStr = localStorage.getItem('user_id'); 
       const userId = userIdStr;
       const showId = String(id);
@@ -185,6 +200,7 @@ const EventPage = () => {
       try {
         const showId = String(id);
         const soldSeats = await getSoldTicketsForShow(showId);
+        console.log("retriving sold bookings ")
         // Example soldSeats: ['S013-C001-R001', 'S013-C002-R001']
 
         const uiSeatIds = soldSeats.map(seat => {
@@ -307,7 +323,7 @@ const EventPage = () => {
             className="w-full h-full object-cover"
             onError={(e) => {
               e.target.onerror = null;
-              e.target.src = 'https://tse3.mm.bing.net/th/id/OIP.4cHT08SCSSMUYUGFDLjx1AHaE8?pid=Api&P=0&h=180';
+              e.target.src = 'https://in.images.search.yahoo.com/images/view;_ylt=Awrx_3cBqXhp6IsRy1W9HAx.;_ylu=c2VjA3NyBHNsawNpbWcEb2lkA2RmNmRkOTFiNjI4YjVlNDg2NmQwOGVlNThkODM0NTRhBGdwb3MDMTMEaXQDYmluZw--?back=https%3A%2F%2Fin.images.search.yahoo.com%2Fsearch%2Fimages%3Fp%3Ddrama%2Bimage%26type%3DE211IN1274G0%26fr%3Dmcafee%26fr2%3Dpiv-web%26tab%3Dorganic%26ri%3D13&w=626&h=352&imgurl=img.freepik.com%2Fpremium-photo%2Ftheater-masks-drama-comedy-with-red-curtain-as-backdrop_175949-7436.jpg&rurl=https%3A%2F%2Fwww.freepik.com%2Fpremium-ai-image%2Ftheater-masks-drama-comedy-with-red-curtain-as-backdrop_188659005.htm&size=58KB&p=drama+image&oid=df6dd91b628b5e4866d08ee58d83454a&fr2=piv-web&fr=mcafee&tt=Premium+Photo+%7C+Theater+masks+drama+and+comedy+with+a+red+curtain+as+...&b=0&ni=21&no=13&ts=&tab=organic&sigr=8.JaTUBEPFeX&sigb=Y5XAifI8Ksh2&sigi=WfaDwGq2ooNY&sigt=KT2f4.sLGh9i&.crumb=FLJfI1E2.uw&fr=mcafee&fr2=piv-web&type=E211IN1274G0';
             }}
           />
           <div className="absolute inset-0 bg-gradient-to-t from-black via-black/60 to-transparent"></div>
