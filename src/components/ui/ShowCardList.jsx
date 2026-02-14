@@ -11,6 +11,7 @@ const ShowCardList = ({ shows }) => {
             className="flex items-center gap-4 p-2 border-b border-gray-200 last:border-b-0"
           >
             <img
+              loading="lazy"
               src={show.image}
               alt={show.name}
               className="w-16 h-16 rounded-md object-cover"

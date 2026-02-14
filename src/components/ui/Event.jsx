@@ -13,6 +13,8 @@ const Event = ({
 }) => {
   const [showModal, setShowModal] = useState(false);
   const [showFullDescription, setShowFullDescription] = useState(false);
+  const [imgLoaded, setImgLoaded] = useState(false);
+const [imgError, setImgError] = useState(false);
 
   const getFormattedCast = (cast) => {
     if (!Array.isArray(cast)) return '';
@@ -30,6 +32,8 @@ const Event = ({
     return desc.slice(0, 150) + '...';
   };
 
+
+  
   return (
     <>
       <div
@@ -37,15 +41,25 @@ const Event = ({
         onClick={() => setShowModal(true)}
       >
         <div className="relative w-full h-[210px] sm:h-[240px] md:h-[270px] lg:h-[300px] overflow-hidden rounded-2xl shadow-xl shadow-black/30 transition-all duration-300 group-hover:scale-[1.03] group-hover:shadow-2xl group-hover:shadow-purple-500/20">
-          <img
-            src={image}
-            alt={title}
-            className="w-full h-full object-cover object-center transition-transform duration-500 group-hover:scale-110"
-            onError={(e) => {
-              e.target.onerror = null;
-              e.target.src = 'https://in.images.search.yahoo.com/images/view;_ylt=Awrx_3cBqXhp6IsRy1W9HAx.;_ylu=c2VjA3NyBHNsawNpbWcEb2lkA2RmNmRkOTFiNjI4YjVlNDg2NmQwOGVlNThkODM0NTRhBGdwb3MDMTMEaXQDYmluZw--?back=https%3A%2F%2Fin.images.search.yahoo.com%2Fsearch%2Fimages%3Fp%3Ddrama%2Bimage%26type%3DE211IN1274G0%26fr%3Dmcafee%26fr2%3Dpiv-web%26tab%3Dorganic%26ri%3D13&w=626&h=352&imgurl=img.freepik.com%2Fpremium-photo%2Ftheater-masks-drama-comedy-with-red-curtain-as-backdrop_175949-7436.jpg&rurl=https%3A%2F%2Fwww.freepik.com%2Fpremium-ai-image%2Ftheater-masks-drama-comedy-with-red-curtain-as-backdrop_188659005.htm&size=58KB&p=drama+image&oid=df6dd91b628b5e4866d08ee58d83454a&fr2=piv-web&fr=mcafee&tt=Premium+Photo+%7C+Theater+masks+drama+and+comedy+with+a+red+curtain+as+...&b=0&ni=21&no=13&ts=&tab=organic&sigr=8.JaTUBEPFeX&sigb=Y5XAifI8Ksh2&sigi=WfaDwGq2ooNY&sigt=KT2f4.sLGh9i&.crumb=FLJfI1E2.uw&fr=mcafee&fr2=piv-web&type=E211IN1274G0';
-            }}
-          />
+          {/* Skeleton */}
+        {!imgLoaded && !imgError && (
+          <div className="absolute inset-0 animate-pulse bg-gray-700" />
+        )}
+
+        <img
+          loading="lazy"
+          src={imgError ? "https://img.freepik.com/premium-photo/theater-masks-drama-comedy-with-red-curtain-as-backdrop_175949-7436.jpg" : image}
+          alt={title}
+          onLoad={() => setImgLoaded(true)}
+          onError={() => {
+            setImgError(true);
+            setImgLoaded(true);
+          }}
+          className={`w-full h-full object-cover object-center transition-all duration-500 group-hover:scale-110 ${
+            imgLoaded ? "opacity-100" : "opacity-0"
+          }`}
+        />
+
           <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/40 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
           <div className="absolute bottom-0 left-0 right-0 p-3 transform translate-y-full group-hover:translate-y-0 transition-transform duration-300">
             <p className="text-white text-xs font-medium bg-purple-600/90 backdrop-blur-sm px-2 py-1 rounded-full inline-block">
@@ -79,6 +93,7 @@ const Event = ({
             {/* Image Section */}
             <div className="relative h-64 sm:h-80 overflow-hidden">
               <img
+                loading="lazy"
                 src={image}
                 alt={title}
                 className="w-full h-full object-cover"

@@ -1,6 +1,7 @@
 
 import { BASE_URL} from '../utils/config';
 import api from '../utils/axiosInstance';
+import { toast } from "react-hot-toast";
 
 const BASE_BOOKING_URL = `${BASE_URL}/Bookings`;
 const JWT_TOKEN = localStorage.getItem('token'); // Replace with actual token
@@ -69,6 +70,8 @@ export const fetchStripeCheckoutUrl = async (userId, showId, seatId) => {
 
     const url = `${BASE_URL}/payment-checkout/${cleanUserId}/${cleanShowId}/${seatId}`;
     console.log(url);
+
+    toast('You will be redirected to Payments Page. Please Complete Payment in 30 minutes');
 
     const response = await api.get(url, {headers});
 

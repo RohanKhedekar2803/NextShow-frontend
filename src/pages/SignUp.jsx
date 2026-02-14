@@ -88,6 +88,7 @@ export default function SignUp() {
     const clientId =
       "1013179941500-37ijcddmm4l7mpe4ve55351cmqkklulk.apps.googleusercontent.com";
     const redirectUri = `${BASE_URL}/auth/google/callback`;
+    console.log("redirect url is" + redirectUri)
     const responseType = "code";
     const scope = "openid email profile";
     const authUrl = `https://accounts.google.com/o/oauth2/v2/auth?client_id=${clientId}&redirect_uri=${encodeURIComponent(

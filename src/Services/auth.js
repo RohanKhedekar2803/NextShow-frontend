@@ -5,6 +5,8 @@ import { BASE_URL } from "../utils/config";
 
 const formUrlEncoded = (data) => new URLSearchParams(data);
 
+const JWT_TOKEN = localStorage.getItem('token'); // Replace with actual token
+
 export const register = async (username, password) => {
   try {
     const response = await api.post(
@@ -68,10 +70,15 @@ export const login = async (username, password) => {
 };
 
 export const getUsername = async (userId) => {
+  const headers = {
+    'Content-Type': 'application/json',
+    Authorization: `Bearer ${JWT_TOKEN}`,
+  };
+
   try {
     const response = await api.get(
       `${BASE_URL}/auth/getuser/${userId}`
-    );
+    ,headers);
 
     console.log(response.data);
     return response.data;
@@ -83,12 +90,14 @@ export const getUsername = async (userId) => {
 };
 
 export const getUserId = async (username) => {
+
   try {
     const response = await api.get(
       `${BASE_URL}/auth/getuserbymail/${username}`,
       {
         headers: {
           Accept: "application/json",
+          Authorization: `Bearer ${JWT_TOKEN}`,
         },
       }
     );

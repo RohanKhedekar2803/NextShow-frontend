@@ -221,6 +221,7 @@ const TheatersPage = () => {
                 <div className="bg-gradient-to-br from-gray-800 via-gray-800 to-gray-900 rounded-2xl shadow-xl shadow-black/30 overflow-hidden transition-all duration-300 group-hover/card:scale-[1.02] group-hover/card:shadow-2xl group-hover/card:shadow-purple-500/20 border border-white/10">
                   <div className="relative h-48 sm:h-56 overflow-hidden">
                     <img
+                      loading="lazy"
                       src={
                         theater.auditorium === 'Ground'
                         ? 'https://tse3.mm.bing.net/th?id=OIP.ZizxV-vNQGUnleeufoWnogHaED&pid=Api&P=0&h=180'
@@ -426,6 +427,7 @@ const TheatersPage = () => {
             {/* Image */}
             <div className="relative h-64 sm:h-80 overflow-hidden">
               <img
+                loading="lazy"
                 src={
                   selectedTheater.auditorium === 'Ground'
                   ? 'https://tse3.mm.bing.net/th?id=OIP.ZizxV-vNQGUnleeufoWnogHaED&pid=Api&P=0&h=180'

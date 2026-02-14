@@ -61,6 +61,10 @@ export default function EventList({ genreType }) {
     };
   }, [movies, checkScrollButtons]);
 
+
+
+
+  
   const handleScroll = (direction) => {
     const container = scrollContainer.current;
     container.scrollBy({ left: direction === 'left' ? -200 : 200, behavior: 'smooth' });

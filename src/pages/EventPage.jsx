@@ -30,27 +30,27 @@ const EventPage = () => {
   const toggleSeat = (sectionIdx, rowIdx, seatIdx) => {
     const seatId = `S${sectionIdx}-R${rowIdx}-C${seatIdx}`;
   
-    // If selecting first seat → lock section
-    if (selectedSeats.length === 0) {
-      setSelectedSection(sectionIdx);
-    }
-  
-    // ❌ Prevent selecting from another section
-    if (
-      selectedSection !== null &&
-      sectionIdx !== selectedSection &&
-      !selectedSeats.includes(seatId)
-    ) {
-      toast.error("Please select seats from the same section only.");
-      return;
-    }
-  
     setSelectedSeats((prev) => {
-      // Deselect
+      // selecting first seat → lock
+      if (prev.length === 0) {
+        setSelectedSection(sectionIdx);
+      }
+  
+      // trying other section while locked → stop
+      if (
+        selectedSection !== null &&
+        sectionIdx !== selectedSection &&
+        !prev.includes(seatId)
+      ) {
+        toast.error("Please select seats from the same section.");
+        return prev;
+      }
+  
+      // deselect
       if (prev.includes(seatId)) {
         const updated = prev.filter((id) => id !== seatId);
   
-        // If no seats left → unlock section
+        // if nothing left → unlock
         if (updated.length === 0) {
           setSelectedSection(null);
         }
@@ -58,10 +58,13 @@ const EventPage = () => {
         return updated;
       }
   
-      // Select
+      // select
       return [...prev, seatId];
     });
   };
+  
+  
+
 
   
 
@@ -132,10 +135,10 @@ const EventPage = () => {
         } else {
           attempts++;
           if (attempts < maxAttempts) {
-            await new Promise((resolve) => setTimeout(resolve, 2000));
+            await new Promise((resolve) => setTimeout(resolve, 4000));
           } else {
             
-            toast.error('❌ Booking not ready after multiple attempts. Please try again.');
+            toast.error('❌ Booking Failed. Please try again.');
           }
         }
       }
@@ -238,14 +241,25 @@ const EventPage = () => {
     }
   }, [modalOpen, id]);
 
-  useEffect(() => {
-    let total = 0;
-    selectedSeats.forEach((seatId) => {
-      const [sectionIdx] = seatId.match(/\d+/g);
-      total += sectionPrices[sectionIdx] || 0;
-    });
-    setFinalprices(total);
-  }, [selectedSeats, sectionPrices]);
+useEffect(() => {
+  if (selectedSeats.length === 0) {
+    setFinalprices(0);
+    return;
+  }
+
+  const [sectionIdx] = selectedSeats[0].match(/\d+/g);
+  const pricePerSeat = sectionPrices[sectionIdx] || 0;
+
+  setFinalprices(pricePerSeat * selectedSeats.length);
+}, [selectedSeats, sectionPrices]); 
+
+useEffect(() => {
+  if (modalOpen) {
+    setSelectedSeats([]);
+    setSelectedSection(null);
+  }
+}, [modalOpen]);
+
 
   // Early returns for loading and error states
   if (loading) {
@@ -318,6 +332,7 @@ const EventPage = () => {
         {/* Hero Section */}
         <div className="relative h-[60vh] sm:h-[70vh] overflow-hidden">
           <img
+            loading="lazy"
             src={posterURL}
             alt={eventTitle}
             className="w-full h-full object-cover"
@@ -456,8 +471,7 @@ const EventPage = () => {
                               const isSelected = selectedSeats.includes(seatId);
                               const isBooked = bookedSeats.includes(seatId);
                               const isOtherSectionDisabled =
-                                selectedSection !== null && sectionIdx !== selectedSection;
-
+                                            selectedSection !== null && sectionIdx !== selectedSection;
                               return (
                                 <button
                                   key={seatId}
@@ -533,6 +547,7 @@ const EventPage = () => {
                   onClick={() => {
                     setModalOpen(false);
                     setSelectedSeats([]);
+                    setSelectedSection(null);
                   }}
                   className="sm:w-auto w-full bg-white/10 hover:bg-white/20 backdrop-blur-sm text-white font-semibold py-4 px-6 rounded-xl transition-all duration-200 border border-white/20 hover:border-white/40"
                 >
