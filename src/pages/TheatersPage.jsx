@@ -216,10 +216,10 @@ const TheatersPage = () => {
               <div
                 key={theater.auditoriumId}
                 onClick={() => setSelectedTheater(theater)}
-                className="min-w-[240px] sm:min-w-[260px] md:min-w-[280px] w-[240px] sm:w-[260px] md:w-[280px] flex-shrink-0 cursor-pointer group/card"
+                className="min-w-[170px] sm:min-w-[220px] md:min-w-[240px] w-[170px] sm:w-[240px] md:w-[280px] flex-shrink-0 cursor-pointer group/card"
               >
                 <div className="bg-gradient-to-br from-gray-800 via-gray-800 to-gray-900 rounded-2xl shadow-xl shadow-black/30 overflow-hidden transition-all duration-300 group-hover/card:scale-[1.02] group-hover/card:shadow-2xl group-hover/card:shadow-purple-500/20 border border-white/10">
-                  <div className="relative h-48 sm:h-56 overflow-hidden">
+                <div className="relative h-40 sm:h-52 md:h-56 overflow-hidden">
                     <img
                       loading="lazy"
                       src={
@@ -235,18 +235,18 @@ const TheatersPage = () => {
                       className="w-full h-full object-cover object-center transition-transform duration-500 group-hover/card:scale-110"
                     />
                     <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent"></div>
-                    <div className="absolute bottom-4 left-4 right-4">
+                    <div className="absolute bottom-2 left-4 right-4">
                       <span className="inline-block px-3 py-1 bg-purple-600/90 backdrop-blur-sm text-white text-xs font-semibold rounded-full">
                         {theater.auditorium}
                       </span>
                     </div>
                   </div>
 
-                  <div className="p-5 sm:p-6">
-                    <h3 className="text-xl sm:text-2xl font-bold text-white mb-2 group-hover/card:text-purple-300 transition-colors duration-200">
+                  <div className="p-3 sm:p-4">
+                    <h3 className="text-sm sm:text-base font-bold leading-tight text-white mb-2 group-hover/card:text-purple-300 transition-colors duration-200">
                       {theater.name}
                     </h3>
-                    <div className="space-y-2 mb-4">
+                    <div className="space-y-1 mb-2">
                       <p className="text-gray-300 text-sm flex items-center gap-2">
                         <svg className="w-4 h-4 text-purple-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                           <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
@@ -254,9 +254,9 @@ const TheatersPage = () => {
                         </svg>
                         {theater.city}
                       </p>
-                      <p className="text-gray-400 text-sm">{theater.location}</p>
+                      <p className="text-gray-400 text-xs sm:text-sm">{theater.location}</p>
                     </div>
-                    <div className="flex items-center justify-between pt-4 border-t border-white/10">
+                    <div className="flex items-center justify-between pt-2 border-t border-white/10">
                       <div className="flex items-center gap-2">
                         <svg className="w-5 h-5 text-yellow-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                           <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z" />

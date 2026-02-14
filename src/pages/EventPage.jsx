@@ -330,7 +330,7 @@ useEffect(() => {
       <Navbar />
       <div className="bg-gradient-to-b from-black via-gray-900 to-black min-h-screen">
         {/* Hero Section */}
-        <div className="relative h-[60vh] sm:h-[70vh] overflow-hidden">
+        <div className="relative h-[45vh] sm:h-[55vh] overflow-hidden">
           <img
             loading="lazy"
             src={posterURL}
@@ -349,7 +349,7 @@ useEffect(() => {
               <h1 className="text-3xl sm:text-4xl lg:text-5xl font-extrabold text-white mb-4 drop-shadow-2xl">
                 {eventTitle}
               </h1>
-              <div className="flex flex-wrap ga p-2 sm:p-3 sm:p-4 mb-3 sm:mb-6">
+              <div className="flex flex-wrap ga p-2 mb-2 sm:mb-6">
                 <div className="flex items-center gap-2 bg-white/10 backdrop-blur-sm px-4 py-2 rounded-full">
                   <Ticket className="w-5 h-5 text-purple-400" />
                   <span className="text-white font-semibold">{eventType}</span>
@@ -365,7 +365,7 @@ useEffect(() => {
               </div>
               <button
                 onClick={() => setModalOpen(true)}
-                className="bg-gradient-to-r from-purple-600 to-purple-700 hover:from-purple-500 hover:to-purple-600 text-white font-bold px-8 py-2.5 sm:py-4 rounded-xl transition-all duration-200 shadow-lg shadow-purple-500/30 hover:shadow-xl hover:shadow-purple-500/40 hover:scale-105 active:scale-95 text-lg"
+                className="bg-gradient-to-r from-purple-600 to-purple-700 hover:from-purple-500 hover:to-purple-600 text-white font-bold px-8 py-2 sm:py-4 rounded-xl transition-all duration-200 shadow-lg shadow-purple-500/30 hover:shadow-xl hover:shadow-purple-500/40 hover:scale-105 active:scale-95 text-lg"
               >
                 Book Tickets Now
               </button>
@@ -375,15 +375,15 @@ useEffect(() => {
 
       {modalOpen && (
         <div 
-          className="fixed inset-0 bg-black/80 backdrop-blur-sm flex items-center justify-center z-50 overflow-y-auto p-2 sm:p-3 sm:p-4 animate-in fade-in duration-200"
+          className="fixed inset-0 bg-black/80 backdrop-blur-sm flex items-center justify-center z-50 overflow-y-auto p-2 sm:p-3 animate-in fade-in duration-200"
           onClick={(e) => e.target === e.currentTarget && setModalOpen(false)}
         >
-          <div className="bg-gradient-to-br from-gray-900 via-gray-800 to-gray-900 rounded-2xl shadow-2xl w-full max-w-6xl relative max-h-[95vh] overflow-hidden flex flex-col animate-in zoom-in-95 duration-200 border border-white/10">
+          <div className="bg-gradient-to-br from-gray-900 via-gray-800 to-gray-900 rounded-2xl shadow-2xl w-full max-w-4xl relative max-h-[95vh] overflow-hidden flex flex-col animate-in zoom-in-95 duration-200 border border-white/10">
             {/* Header */}
             <div className="p-3 sm:p-6 md:p-8 border-b border-white/10 bg-gradient-to-r from-purple-600/20 to-transparent flex-shrink-0">
               <div className="flex items-start justify-between">
                 <div className="flex-1">
-                  <h2 className="text-sm sm:text-lg md:text-3xl font-bold text-white mb-1 sm:mb-2">{eventTitle}</h2>
+                  <h2 className="text-xs sm:text-lg md:text-3xl font-bold text-white mb-1 sm:mb-2">{eventTitle}</h2>
                   <div className="flex flex-wrap gap-2 items-center text-xs sm:text-sm">
                     <span className="px-3 py-1 bg-purple-600/20 text-purple-300 rounded-full font-semibold border border-purple-500/30">
                       {eventType}
@@ -408,27 +408,27 @@ useEffect(() => {
 
             {/* Seat Legend */}
             <div className="px-4 sm:px-8 pt-3 flex-shrink-0">
-              <div className="flex flex-wrap items-center justify-center ga p-2 sm:p-3 sm:p-4 sm:gap-6 mb-3 sm:mb-6">
+              <div className="flex flex-wrap items-center justify-center gap-2 sm:gap-6 mb-2 sm:mb-6">
                 <div className="flex items-center gap-2">
                   <div className="w-5 h-5 sm:w-6 sm:h-6 rounded bg-gray-600 border border-gray-500"></div>
-                  <span className="text-sm text-gray-300">Available</span>
+                  <span className="text-xs sm:text-sm text-gray-300">Available</span>
                 </div>
                 <div className="flex items-center gap-2">
                   <div className="w-5 h-5 sm:w-6 sm:h-6 rounded bg-gradient-to-br from-green-500 to-green-600 border border-green-400 shadow-lg shadow-green-500/30"></div>
-                  <span className="text-sm text-gray-300">Selected</span>
+                  <span className="text-xs sm:text-sm text-gray-300">Selected</span>
                 </div>
                 <div className="flex items-center gap-2">
                   <div className="w-5 h-5 sm:w-6 sm:h-6 rounded bg-red-600 border border-red-500 opacity-60"></div>
-                  <span className="text-sm text-gray-300">Booked</span>
+                  <span className="text-xs sm:text-sm text-gray-300">Booked</span>
                 </div>
               </div>
             </div>
 
             {/* Screen Indicator */}
-            <div className="w-full text-center mb-3 sm:mb-6 px-6 sm:px-8 flex-shrink-0">
+            <div className="w-full text-center mb-2 sm:mb-6 px-6 sm:px-8 flex-shrink-0">
               <div className="relative">
-                <div className="bg-gradient-to-b from-gray-600 via-gray-700 to-gray-800 h-8 sm:h-12 w-[70%] sm:w-[60%] mx-auto rounded-t-2xl shadow-2xl border-2 border-gray-500/50 flex items-center justify-center">
-                  <Monitor className="w-5 h-5 sm:w-6 sm:h-6 sm:w-8 sm:h-8 text-gray-300" />
+                <div className="bg-gradient-to-b from-gray-600 via-gray-700 to-gray-800 h-7 sm:h-12 w-[70%] sm:w-[60%] mx-auto rounded-t-2xl shadow-2xl border-2 border-gray-500/50 flex items-center justify-center">
+                  <Monitor className="w-5 h-5 sm:w-6 sm:h-6  text-gray-300" />
                 </div>
                 <div className="absolute inset-x-0 top-full flex justify-center">
                   <div className="w-0 h-0 border-l-[20px] border-r-[20px] border-t-[10px] border-l-transparent border-r-transparent border-t-gray-700"></div>
@@ -447,17 +447,25 @@ useEffect(() => {
               <div className="w-full overflow-x-auto">
                 {seatLayout.map((section, sectionIdx) => {
                   const maxSeatsInRow = Math.max(...section);
-                  const seatSize = Math.min(45, Math.max(35, Math.floor((0.75 * window.innerWidth) / maxSeatsInRow) - 8));
-                  const fontSize = seatSize > 35 ? 'text-sm' : seatSize > 28 ? 'text-xs' : 'text-[10px]';
+                  const base = Math.floor((0.75 * window.innerWidth) / maxSeatsInRow) - 8;
+                  let seatSize = Math.max(26, base);
+
+                    // boost for laptop
+                    if (window.innerWidth >= 900) {
+                      seatSize = Math.max(34, base);
+                    }
+
+                    seatSize = Math.min(48, seatSize);
+                  const fontSize = seatSize > 30 ? 'text-sm' : seatSize > 28 ? 'text-xs' : 'text-[10px]';
 
                   const rowOffset = seatLayout
                     .slice(0, sectionIdx)
                     .reduce((acc, sec) => acc + sec.length, 0);
 
                   return (
-                    <div key={sectionIdx} className="mb-8 last:mb-4">
-                      <div className="flex items-center justify-between mb-4 bg-white/5 backdrop-blur-sm rounded-xl p-2 sm:p-3 sm:p-4 border border-white/10">
-                        <h3 className="text-white font-bold text-sm sm:text-lg">Section {sectionIdx + 1}</h3>
+                    <div key={sectionIdx} className="mb-4 sm:mb-8 last:mb-2">
+                      <div className="flex items-center justify-between mb-4 bg-white/5 backdrop-blur-sm rounded-xl p-2 sm:p-3 border border-white/10">
+                        <h3 className="text-white font-bold text-xs sm:text-lg">Section {sectionIdx + 1}</h3>
                         <span className="text-purple-400 font-bold text-lg">₹{sectionPrices[sectionIdx] || 0}</span>
                       </div>
 
@@ -465,7 +473,7 @@ useEffect(() => {
                         const globalRowIdx = rowOffset + rowIdx;
 
                         return (
-                          <div key={globalRowIdx} className="flex gap-1.5 sm:gap-2 mb-1 sm:mb-2 justify-center flex-wrap">
+                          <div key={globalRowIdx} className="flex gap-1 sm:gap-2 mb-1 sm:mb-2 justify-center flex-wrap">
                             {Array.from({ length: seatCount }, (_, seatIdx) => {
                               const seatId = `S${sectionIdx}-R${globalRowIdx}-C${seatIdx}`;
                               const isSelected = selectedSeats.includes(seatId);
@@ -514,12 +522,12 @@ useEffect(() => {
 
             {/* Footer with Summary and Actions */}
             <div className="p-3 sm:p-6 md:p-8 pt-0 border-t border-white/10 bg-gradient-to-t from-gray-900/50 to-transparent flex-shrink-0">
-              <div className="mb-3 sm:mb-6">
-                <div className="bg-white/5 backdrop-blur-sm rounded-xl p-2 sm:p-3 sm:p-4 border border-white/10 mb-4">
+              <div className="mb-2 sm:mb-6">
+                <div className="bg-white/5 backdrop-blur-sm rounded-xl p-2 sm:p-3 border border-white/10 mb-4">
                   <div className="flex items-center justify-between">
                     <div>
                       <p className="text-sm text-gray-400 mb-1">Selected Seats</p>
-                      <p className="text-sm sm:text-lg md:text-xl font-bold text-white">{selectedSeats.length} {selectedSeats.length === 1 ? 'seat' : 'seats'}</p>
+                      <p className="text-xs sm:text-lg md:text-xl font-bold text-white">{selectedSeats.length} {selectedSeats.length === 1 ? 'seat' : 'seats'}</p>
                     </div>
                     <div className="text-right">
                       <p className="text-sm text-gray-400 mb-1">Total Price</p>
@@ -529,13 +537,13 @@ useEffect(() => {
                 </div>
               </div>
               
-              <div className="flex flex-col sm:flex-row gap-3">
+              <div className="flex flex-col sm:flex-row gap-2 sm:gap-3">
                 <button
                   onClick={handleFinalBooking}
                   disabled={selectedSeats.length === 0}
                   className={`
                     flex-1 bg-gradient-to-r from-purple-600 to-purple-700 hover:from-purple-500 hover:to-purple-600 
-                    text-white font-bold py-2.5 sm:py-4 px-6 rounded-xl transition-all duration-200 
+                    text-white font-bold py-2 sm:py-4 px-6 rounded-xl transition-all duration-200 
                     shadow-lg shadow-purple-500/30 hover:shadow-xl hover:shadow-purple-500/40 
                     hover:scale-[1.02] active:scale-[0.98]
                     ${selectedSeats.length === 0 ? 'opacity-50 cursor-not-allowed' : ''}
@@ -549,7 +557,7 @@ useEffect(() => {
                     setSelectedSeats([]);
                     setSelectedSection(null);
                   }}
-                  className="sm:w-auto w-full bg-white/10 hover:bg-white/20 backdrop-blur-sm text-white font-semibold py-2.5 sm:py-4 px-6 rounded-xl transition-all duration-200 border border-white/20 hover:border-white/40"
+                  className="sm:w-auto w-full bg-white/10 hover:bg-white/20 backdrop-blur-sm text-white font-semibold py-2 sm:py-4 px-6 rounded-xl transition-all duration-200 border border-white/20 hover:border-white/40"
                 >
                   Cancel
                 </button>
