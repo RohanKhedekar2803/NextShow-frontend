@@ -285,7 +285,7 @@ useEffect(() => {
             <div className="w-16 h-16 mx-auto mb-4 rounded-full bg-red-600/20 flex items-center justify-center">
               <X className="w-8 h-8 text-red-400" />
             </div>
-            <h1 className="text-3xl font-bold text-white mb-2">Event Not Found</h1>
+            <h1 className="text-3xl font-bold text-white mb-1 sm:mb-2">Event Not Found</h1>
             <p className="text-gray-400">{error || 'The event you\'re looking for does not exist.'}</p>
           </div>
         </div>
@@ -344,12 +344,12 @@ useEffect(() => {
           <div className="absolute inset-0 bg-gradient-to-t from-black via-black/60 to-transparent"></div>
           
           {/* Event Info Overlay */}
-          <div className="absolute bottom-0 left-0 right-0 p-6 sm:p-8 lg:p-12">
+          <div className="absolute bottom-0 left-0 right-0 p-3 sm:p-6 md:p-8 lg:p-12">
             <div className="max-w-4xl mx-auto">
               <h1 className="text-3xl sm:text-4xl lg:text-5xl font-extrabold text-white mb-4 drop-shadow-2xl">
                 {eventTitle}
               </h1>
-              <div className="flex flex-wrap gap-4 mb-6">
+              <div className="flex flex-wrap ga p-2 sm:p-3 sm:p-4 mb-3 sm:mb-6">
                 <div className="flex items-center gap-2 bg-white/10 backdrop-blur-sm px-4 py-2 rounded-full">
                   <Ticket className="w-5 h-5 text-purple-400" />
                   <span className="text-white font-semibold">{eventType}</span>
@@ -365,7 +365,7 @@ useEffect(() => {
               </div>
               <button
                 onClick={() => setModalOpen(true)}
-                className="bg-gradient-to-r from-purple-600 to-purple-700 hover:from-purple-500 hover:to-purple-600 text-white font-bold px-8 py-4 rounded-xl transition-all duration-200 shadow-lg shadow-purple-500/30 hover:shadow-xl hover:shadow-purple-500/40 hover:scale-105 active:scale-95 text-lg"
+                className="bg-gradient-to-r from-purple-600 to-purple-700 hover:from-purple-500 hover:to-purple-600 text-white font-bold px-8 py-2.5 sm:py-4 rounded-xl transition-all duration-200 shadow-lg shadow-purple-500/30 hover:shadow-xl hover:shadow-purple-500/40 hover:scale-105 active:scale-95 text-lg"
               >
                 Book Tickets Now
               </button>
@@ -375,16 +375,16 @@ useEffect(() => {
 
       {modalOpen && (
         <div 
-          className="fixed inset-0 bg-black/80 backdrop-blur-sm flex items-center justify-center z-50 overflow-y-auto p-4 animate-in fade-in duration-200"
+          className="fixed inset-0 bg-black/80 backdrop-blur-sm flex items-center justify-center z-50 overflow-y-auto p-2 sm:p-3 sm:p-4 animate-in fade-in duration-200"
           onClick={(e) => e.target === e.currentTarget && setModalOpen(false)}
         >
           <div className="bg-gradient-to-br from-gray-900 via-gray-800 to-gray-900 rounded-2xl shadow-2xl w-full max-w-6xl relative max-h-[95vh] overflow-hidden flex flex-col animate-in zoom-in-95 duration-200 border border-white/10">
             {/* Header */}
-            <div className="p-6 sm:p-8 border-b border-white/10 bg-gradient-to-r from-purple-600/20 to-transparent flex-shrink-0">
+            <div className="p-3 sm:p-6 md:p-8 border-b border-white/10 bg-gradient-to-r from-purple-600/20 to-transparent flex-shrink-0">
               <div className="flex items-start justify-between">
                 <div className="flex-1">
-                  <h2 className="text-2xl sm:text-3xl font-bold text-white mb-2">{eventTitle}</h2>
-                  <div className="flex flex-wrap gap-3 items-center text-sm">
+                  <h2 className="text-sm sm:text-lg md:text-3xl font-bold text-white mb-1 sm:mb-2">{eventTitle}</h2>
+                  <div className="flex flex-wrap gap-2 items-center text-xs sm:text-sm">
                     <span className="px-3 py-1 bg-purple-600/20 text-purple-300 rounded-full font-semibold border border-purple-500/30">
                       {eventType}
                     </span>
@@ -401,34 +401,34 @@ useEffect(() => {
                   className="w-10 h-10 flex items-center justify-center bg-white/10 hover:bg-white/20 backdrop-blur-sm rounded-full text-white transition-all duration-200 hover:rotate-90 hover:scale-110 flex-shrink-0 ml-4"
                   aria-label="Close modal"
                 >
-                  <X className="w-6 h-6" />
+                  <X className="w-5 h-5 sm:w-6 sm:h-6" />
                 </button>
               </div>
             </div>
 
             {/* Seat Legend */}
-            <div className="px-6 sm:px-8 pt-6 flex-shrink-0">
-              <div className="flex flex-wrap items-center justify-center gap-4 sm:gap-6 mb-6">
+            <div className="px-4 sm:px-8 pt-3 flex-shrink-0">
+              <div className="flex flex-wrap items-center justify-center ga p-2 sm:p-3 sm:p-4 sm:gap-6 mb-3 sm:mb-6">
                 <div className="flex items-center gap-2">
-                  <div className="w-6 h-6 rounded bg-gray-600 border border-gray-500"></div>
+                  <div className="w-5 h-5 sm:w-6 sm:h-6 rounded bg-gray-600 border border-gray-500"></div>
                   <span className="text-sm text-gray-300">Available</span>
                 </div>
                 <div className="flex items-center gap-2">
-                  <div className="w-6 h-6 rounded bg-gradient-to-br from-green-500 to-green-600 border border-green-400 shadow-lg shadow-green-500/30"></div>
+                  <div className="w-5 h-5 sm:w-6 sm:h-6 rounded bg-gradient-to-br from-green-500 to-green-600 border border-green-400 shadow-lg shadow-green-500/30"></div>
                   <span className="text-sm text-gray-300">Selected</span>
                 </div>
                 <div className="flex items-center gap-2">
-                  <div className="w-6 h-6 rounded bg-red-600 border border-red-500 opacity-60"></div>
+                  <div className="w-5 h-5 sm:w-6 sm:h-6 rounded bg-red-600 border border-red-500 opacity-60"></div>
                   <span className="text-sm text-gray-300">Booked</span>
                 </div>
               </div>
             </div>
 
             {/* Screen Indicator */}
-            <div className="w-full text-center mb-6 px-6 sm:px-8 flex-shrink-0">
+            <div className="w-full text-center mb-3 sm:mb-6 px-6 sm:px-8 flex-shrink-0">
               <div className="relative">
                 <div className="bg-gradient-to-b from-gray-600 via-gray-700 to-gray-800 h-8 sm:h-12 w-[70%] sm:w-[60%] mx-auto rounded-t-2xl shadow-2xl border-2 border-gray-500/50 flex items-center justify-center">
-                  <Monitor className="w-6 h-6 sm:w-8 sm:h-8 text-gray-300" />
+                  <Monitor className="w-5 h-5 sm:w-6 sm:h-6 sm:w-8 sm:h-8 text-gray-300" />
                 </div>
                 <div className="absolute inset-x-0 top-full flex justify-center">
                   <div className="w-0 h-0 border-l-[20px] border-r-[20px] border-t-[10px] border-l-transparent border-r-transparent border-t-gray-700"></div>
@@ -456,8 +456,8 @@ useEffect(() => {
 
                   return (
                     <div key={sectionIdx} className="mb-8 last:mb-4">
-                      <div className="flex items-center justify-between mb-4 bg-white/5 backdrop-blur-sm rounded-xl p-4 border border-white/10">
-                        <h3 className="text-white font-bold text-lg">Section {sectionIdx + 1}</h3>
+                      <div className="flex items-center justify-between mb-4 bg-white/5 backdrop-blur-sm rounded-xl p-2 sm:p-3 sm:p-4 border border-white/10">
+                        <h3 className="text-white font-bold text-sm sm:text-lg">Section {sectionIdx + 1}</h3>
                         <span className="text-purple-400 font-bold text-lg">₹{sectionPrices[sectionIdx] || 0}</span>
                       </div>
 
@@ -465,7 +465,7 @@ useEffect(() => {
                         const globalRowIdx = rowOffset + rowIdx;
 
                         return (
-                          <div key={globalRowIdx} className="flex gap-1.5 sm:gap-2 mb-2 justify-center flex-wrap">
+                          <div key={globalRowIdx} className="flex gap-1.5 sm:gap-2 mb-1 sm:mb-2 justify-center flex-wrap">
                             {Array.from({ length: seatCount }, (_, seatIdx) => {
                               const seatId = `S${sectionIdx}-R${globalRowIdx}-C${seatIdx}`;
                               const isSelected = selectedSeats.includes(seatId);
@@ -513,17 +513,17 @@ useEffect(() => {
             </div>
 
             {/* Footer with Summary and Actions */}
-            <div className="p-6 sm:p-8 pt-0 border-t border-white/10 bg-gradient-to-t from-gray-900/50 to-transparent flex-shrink-0">
-              <div className="mb-6">
-                <div className="bg-white/5 backdrop-blur-sm rounded-xl p-4 border border-white/10 mb-4">
+            <div className="p-3 sm:p-6 md:p-8 pt-0 border-t border-white/10 bg-gradient-to-t from-gray-900/50 to-transparent flex-shrink-0">
+              <div className="mb-3 sm:mb-6">
+                <div className="bg-white/5 backdrop-blur-sm rounded-xl p-2 sm:p-3 sm:p-4 border border-white/10 mb-4">
                   <div className="flex items-center justify-between">
                     <div>
                       <p className="text-sm text-gray-400 mb-1">Selected Seats</p>
-                      <p className="text-xl font-bold text-white">{selectedSeats.length} {selectedSeats.length === 1 ? 'seat' : 'seats'}</p>
+                      <p className="text-sm sm:text-lg md:text-xl font-bold text-white">{selectedSeats.length} {selectedSeats.length === 1 ? 'seat' : 'seats'}</p>
                     </div>
                     <div className="text-right">
                       <p className="text-sm text-gray-400 mb-1">Total Price</p>
-                      <p className="text-2xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-purple-400 to-yellow-400">₹{finalprices}</p>
+                      <p className="text-lg sm:text-2xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-purple-400 to-yellow-400">₹{finalprices}</p>
                     </div>
                   </div>
                 </div>
@@ -535,7 +535,7 @@ useEffect(() => {
                   disabled={selectedSeats.length === 0}
                   className={`
                     flex-1 bg-gradient-to-r from-purple-600 to-purple-700 hover:from-purple-500 hover:to-purple-600 
-                    text-white font-bold py-4 px-6 rounded-xl transition-all duration-200 
+                    text-white font-bold py-2.5 sm:py-4 px-6 rounded-xl transition-all duration-200 
                     shadow-lg shadow-purple-500/30 hover:shadow-xl hover:shadow-purple-500/40 
                     hover:scale-[1.02] active:scale-[0.98]
                     ${selectedSeats.length === 0 ? 'opacity-50 cursor-not-allowed' : ''}
@@ -549,7 +549,7 @@ useEffect(() => {
                     setSelectedSeats([]);
                     setSelectedSection(null);
                   }}
-                  className="sm:w-auto w-full bg-white/10 hover:bg-white/20 backdrop-blur-sm text-white font-semibold py-4 px-6 rounded-xl transition-all duration-200 border border-white/20 hover:border-white/40"
+                  className="sm:w-auto w-full bg-white/10 hover:bg-white/20 backdrop-blur-sm text-white font-semibold py-2.5 sm:py-4 px-6 rounded-xl transition-all duration-200 border border-white/20 hover:border-white/40"
                 >
                   Cancel
                 </button>

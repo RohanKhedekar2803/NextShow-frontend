@@ -81,7 +81,7 @@ const PaymentFailedPage = () => {
           bg-gradient-to-r from-purple-600 to-purple-700
           hover:from-purple-500 hover:to-purple-600
           text-white font-bold
-          py-3 px-6
+          py-2 sm:py-3 px-6
           rounded-xl
           transition-all duration-200
           shadow-lg shadow-purple-500/30

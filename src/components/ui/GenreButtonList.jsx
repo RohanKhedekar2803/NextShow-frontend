@@ -47,7 +47,7 @@ const GenreButtonList = () => {
               <button
                 key={genre}
                 onClick={() => handleGenreChange(genre)}
-                className={`px-5 sm:px-6 py-2.5 sm:py-3 rounded-xl text-sm sm:text-base font-bold transition-all duration-300 transform hover:scale-105 active:scale-95 ${
+                className={`px-5 sm:px-6 py-2.5 sm:py-2 sm:py-3 rounded-xl text-sm sm:text-base font-bold transition-all duration-300 transform hover:scale-105 active:scale-95 ${
                   selectedGenre === genre
                     ? 'bg-gradient-to-r from-yellow-400 to-yellow-500 text-gray-900 shadow-lg shadow-yellow-500/50'
                     : 'bg-white/10 hover:bg-white/20 backdrop-blur-sm text-white border border-white/20 hover:border-white/40'

@@ -354,7 +354,7 @@ const TheatersPage = () => {
               value={filterTheater}
               onChange={handleInputChangeTheater}
               placeholder="Search for a Hall..."
-              className="w-full pl-12 pr-10 py-3 rounded-xl bg-white/10 backdrop-blur-sm text-white placeholder-gray-400 border border-white/20 focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-purple-500 transition-all duration-200"
+              className="w-full pl-12 pr-10 py-2 sm:py-3 rounded-xl bg-white/10 backdrop-blur-sm text-white placeholder-gray-400 border border-white/20 focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-purple-500 transition-all duration-200"
             />
             {filterTheater && (
               <button
@@ -397,10 +397,10 @@ const TheatersPage = () => {
         >
           <div className="bg-gradient-to-br from-gray-900 via-gray-800 to-gray-900 rounded-2xl shadow-2xl max-w-4xl w-full overflow-hidden flex flex-col max-h-[90vh] animate-in zoom-in-95 duration-200 border border-white/10">
             {/* Header */}
-            <div className="p-6 sm:p-8 border-b border-white/10 bg-gradient-to-r from-purple-600/20 to-transparent">
+            <div className="p-4 sm:p-6 md:p-8 border-b border-white/10 bg-gradient-to-r from-purple-600/20 to-transparent">
               <div className="flex items-start justify-between">
                 <div className="flex-1">
-                  <h2 className="text-2xl sm:text-3xl font-bold text-white mb-2">{selectedTheater.name}</h2>
+                  <h2 className="text-lg sm:text-xl md:text-3xl font-bold text-white mb-2">{selectedTheater.name}</h2>
                   <div className="flex flex-wrap gap-3 items-center">
                     <span className="px-3 py-1 bg-purple-600/20 text-purple-300 rounded-full text-sm font-semibold border border-purple-500/30">
                       {selectedTheater.auditorium}
@@ -425,7 +425,7 @@ const TheatersPage = () => {
             </div>
 
             {/* Image */}
-            <div className="relative h-64 sm:h-80 overflow-hidden">
+            <div className="relative h-40 sm:h-56 md:h-80 overflow-hidden">
               <img
                 loading="lazy"
                 src={
@@ -444,7 +444,7 @@ const TheatersPage = () => {
             </div>
 
             {/* Content */}
-            <div className="flex-1 overflow-y-auto p-6 sm:p-8 space-y-6">
+            <div className="flex-1 overflow-y-auto p-4 sm:p-6 md:p-8 space-y-6">
               {/* Theater Info */}
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                 <div className="bg-white/5 backdrop-blur-sm rounded-xl p-4 border border-white/10">
@@ -459,7 +459,7 @@ const TheatersPage = () => {
 
               {/* Events Table */}
               <div>
-                <h3 className="text-xl font-bold text-white mb-4 flex items-center gap-2">
+                <h3 className="text-base sm:text-lg md:text-xl font-bold text-white mb-4 flex items-center gap-2">
                   <svg className="w-6 h-6 text-purple-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
                   </svg>
@@ -522,11 +522,11 @@ const TheatersPage = () => {
                       {showslist.map((event) => (
                         <div 
                           key={event.showId}
-                          className="bg-white/5 backdrop-blur-sm rounded-xl p-5 border border-white/10 hover:border-purple-500/50 transition-all duration-200"
+                          className="bg-white/5 backdrop-blur-sm rounded-xl p-3 sm:p-4 md:p-5 border border-white/10 hover:border-purple-500/50 transition-all duration-200"
                         >
                           <div className="space-y-4">
                             <div>
-                              <h4 className="text-white font-bold text-lg mb-2">{event.event?.title || 'N/A'}</h4>
+                              <h4 className="text-white font-bold text-base sm:text-lg mb-2">{event.event?.title || 'N/A'}</h4>
                               <div className="space-y-2 text-sm text-gray-300">
                                 <div className="flex items-center gap-2">
                                   <svg className="w-4 h-4 text-purple-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -547,7 +547,7 @@ const TheatersPage = () => {
                               </div>
                             </div>
                             <button
-                              className="w-full bg-gradient-to-r from-purple-600 to-purple-700 hover:from-purple-500 hover:to-purple-600 text-white text-sm font-semibold px-5 py-3 rounded-xl transition-all duration-200 shadow-lg shadow-purple-500/30 hover:shadow-xl hover:shadow-purple-500/40 active:scale-95"
+                              className="w-full bg-gradient-to-r from-purple-600 to-purple-700 hover:from-purple-500 hover:to-purple-600 text-white text-sm font-semibold px-5 py-2 sm:py-3 rounded-xl transition-all duration-200 shadow-lg shadow-purple-500/30 hover:shadow-xl hover:shadow-purple-500/40 active:scale-95"
                               onClick={() => {
                                 navigate(`/events/${event.showId}`);
                                 closeModal();

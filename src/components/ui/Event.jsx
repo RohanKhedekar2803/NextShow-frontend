@@ -91,7 +91,7 @@ const [imgError, setImgError] = useState(false);
             </button>
 
             {/* Image Section */}
-            <div className="relative h-64 sm:h-80 overflow-hidden">
+            <div className="relative h-40 sm:h-56 md:h-80 overflow-hidden">
               <img
                 loading="lazy"
                 src={image}
@@ -106,10 +106,10 @@ const [imgError, setImgError] = useState(false);
             </div>
 
             {/* Content Section */}
-            <div className="flex-1 overflow-y-auto p-6 sm:p-8 space-y-6">
+            <div className="flex-1 overflow-y-auto p-4 sm:p-6 md:p-8 space-y-6">
               {/* Title and Genre */}
               <div>
-                <h2 className="text-2xl sm:text-3xl font-bold text-white mb-2">{title}</h2>
+                <h2 className="text-lg sm:text-xl md:text-3xl font-bold text-white mb-2">{title}</h2>
                 <div className="flex flex-wrap gap-2 items-center">
                   <span className="px-3 py-1 bg-purple-600/20 text-purple-300 rounded-full text-sm font-semibold border border-purple-500/30">
                     {genre}
@@ -167,7 +167,7 @@ const [imgError, setImgError] = useState(false);
             </div>
 
             {/* Action Button */}
-            <div className="p-6 sm:p-8 pt-0 border-t border-white/10 bg-gradient-to-t from-gray-900/50 to-transparent">
+            <div className="p-4 sm:p-6 md:p-8 pt-0 border-t border-white/10 bg-gradient-to-t from-gray-900/50 to-transparent">
               <button
                 className="w-full bg-gradient-to-r from-purple-600 to-purple-700 hover:from-purple-500 hover:to-purple-600 text-white font-bold py-4 px-6 rounded-xl transition-all duration-200 shadow-lg shadow-purple-500/30 hover:shadow-xl hover:shadow-purple-500/40 hover:scale-[1.02] active:scale-[0.98]"
                 onClick={() => {

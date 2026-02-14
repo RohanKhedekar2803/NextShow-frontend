@@ -29,13 +29,13 @@ export default function Banner() {
             Discover amazing events, shows, and experiences
           </p>
           <div className="flex flex-wrap justify-center gap-4 mt-8">
-            <div className="px-6 py-3 bg-white/10 backdrop-blur-md rounded-full border border-white/20 text-white font-semibold">
+            <div className="px-6 py-2 sm:py-3 bg-white/10 backdrop-blur-md rounded-full border border-white/20 text-white font-semibold">
               🎬 Movies
             </div>
-            <div className="px-6 py-3 bg-white/10 backdrop-blur-md rounded-full border border-white/20 text-white font-semibold">
+            <div className="px-6 py-2 sm:py-3 bg-white/10 backdrop-blur-md rounded-full border border-white/20 text-white font-semibold">
               ⚽ Sports
             </div>
-            <div className="px-6 py-3 bg-white/10 backdrop-blur-md rounded-full border border-white/20 text-white font-semibold">
+            <div className="px-6 py-2 sm:py-3 bg-white/10 backdrop-blur-md rounded-full border border-white/20 text-white font-semibold">
               🎭 Live Shows
             </div>
           </div>

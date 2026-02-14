@@ -171,7 +171,7 @@ export default function EventList({ genreType }) {
         >
           <div className="bg-gradient-to-br from-gray-900 via-gray-800 to-gray-900 rounded-2xl shadow-2xl max-w-5xl w-full overflow-hidden flex flex-col max-h-[90vh] animate-in zoom-in-95 duration-200 border border-white/10">
             {/* Header */}
-            <div className="p-6 sm:p-8 border-b border-white/10 bg-gradient-to-r from-purple-600/20 to-transparent">
+            <div className="p-4 sm:p-6 md:p-8 border-b border-white/10 bg-gradient-to-r from-purple-600/20 to-transparent">
               <div className="flex items-start justify-between">
                 <div>
                   <h2 className="text-xl sm:text-2xl font-bold text-white mb-2">
@@ -192,7 +192,7 @@ export default function EventList({ genreType }) {
             </div>
 
             {/* Content */}
-            <div className="flex-1 overflow-y-auto p-6 sm:p-8">
+            <div className="flex-1 overflow-y-auto p-4 sm:p-6 md:p-8">
               {shows.length === 0 ? (
                 <div className="text-center py-12">
                   <div className="w-16 h-16 mx-auto mb-4 rounded-full bg-purple-600/20 flex items-center justify-center">
@@ -259,11 +259,11 @@ export default function EventList({ genreType }) {
                         return (
                           <div 
                             key={idx}
-                            className="bg-white/5 backdrop-blur-sm rounded-xl p-5 border border-white/10 hover:border-purple-500/50 transition-all duration-200"
+                            className="bg-white/5 backdrop-blur-sm rounded-xl p-3 sm:p-4 md:p-5 border border-white/10 hover:border-purple-500/50 transition-all duration-200"
                           >
                             <div className="space-y-4">
                               <div>
-                                <h3 className="text-white font-bold text-lg mb-1">{aud?.name || 'Loading...'}</h3>
+                                <h3 className="text-white font-bold text-base sm:text-lg mb-1">{aud?.name || 'Loading...'}</h3>
                                 <p className="text-gray-400 text-sm">{aud?.location || 'Loading...'}</p>
                               </div>
                               
@@ -281,7 +281,7 @@ export default function EventList({ genreType }) {
 
                               <div className="flex items-center justify-between pt-2 border-t border-white/10">
                                 <div>
-                                  <span className="text-purple-400 font-bold text-xl">₹{show.blockprices?.[0] || 'N/A'}</span>
+                                  <span className="text-purple-400 font-bold text-lg sm:text-xl">₹{show.blockprices?.[0] || 'N/A'}</span>
                                   <span className="text-gray-500 text-sm ml-1">onwards</span>
                                 </div>
                                 <button
