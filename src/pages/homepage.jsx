@@ -27,11 +27,8 @@ const HomePage = () => {
         localStorage.setItem("username", decoded.sub);
       }
     }
-
-    // clean URL
     window.history.replaceState({}, document.title, "/homepage");
 
-    // ⭐ unlock app
     setReady(true);
   }, []);
 

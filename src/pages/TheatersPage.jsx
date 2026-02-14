@@ -216,7 +216,7 @@ const TheatersPage = () => {
               <div
                 key={theater.auditoriumId}
                 onClick={() => setSelectedTheater(theater)}
-                className="min-w-[280px] sm:min-w-[320px] md:min-w-[360px] w-[280px] sm:w-[320px] md:w-[360px] flex-shrink-0 cursor-pointer group/card"
+                className="min-w-[240px] sm:min-w-[260px] md:min-w-[280px] w-[240px] sm:w-[260px] md:w-[280px] flex-shrink-0 cursor-pointer group/card"
               >
                 <div className="bg-gradient-to-br from-gray-800 via-gray-800 to-gray-900 rounded-2xl shadow-xl shadow-black/30 overflow-hidden transition-all duration-300 group-hover/card:scale-[1.02] group-hover/card:shadow-2xl group-hover/card:shadow-purple-500/20 border border-white/10">
                   <div className="relative h-48 sm:h-56 overflow-hidden">
